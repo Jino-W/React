@@ -1,0 +1,97 @@
+<html>
+
+<head>
+    <title> Users </title>
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.js"></script>
+    <script src="../js/axios.js"></script>
+     <script type="text/babel">
+     const rootHandle = document.getElementById('root')
+
+
+
+class UserPost extends React.Component{
+        constructor(){
+        super()
+        this.state = {
+            users: [],
+            user:{}
+        }
+    }
+handleNameChange = (e) => {
+    const id = e.target.value
+    console.log(id)
+    const user = this.state.users.find((user) =>{
+        return user.id == id
+    })
+    console.log(user)
+    this.setState({
+        user
+    })
+}
+
+componentDidMount() {
+    axios.get('https://jsonplaceholder.typicode.com/users')
+        .then(response => {
+            const users = response.data
+            this.setState({users})
+        })
+        .catch(error => {
+            console.log(error)
+        })
+}
+
+handleSubmit= (e)=> {
+                    e.preventDefault()
+                    const formData = this.state
+                    console.log(formData)
+                }
+render() {
+    return(
+        <div>
+            <label>
+               <h1> Select users</h1>
+                <form onSubmit={this.handleSubmit}>
+                <select onChange={this.handleNameChange} value={this.state.name}>
+                <option value=''> select </option>
+                    {this.state.users.map(user => {
+                        return <option key={user.id} value={user.id}>{user.name}</option>
+                    })}
+                </select>
+                </form>
+                <table border ="2px" cellPadding="12">
+                        <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>name</th>
+                                <th>email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{this.state.user.id}</td>
+                            <td>{this.state.user.name}</td>
+                            <td>{this.state.user.email}</td>
+                            
+
+                        </tr>
+                            </tbody>
+                            </table>
+                           
+                    </label>
+                    
+        </div>
+    )
+}
+}
+ReactDOM.render(<UserPost/>,rootHandle)
+</script>
+</body>
+</html>

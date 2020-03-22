@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+
+        class Counter extends React.Component{
+            constructor(){
+                super()
+                this.state = {
+                    count : 0
+                }
+                console.log('inside constructor',this)
+                this.handleUp = this.handleUp.bind(this)
+            }
+            handleUp(){
+                this.setState((prevState)=>{           
+                    return {            
+                        count: prevState.count + 1
+                    }
+                })
+            }
+            
+            
+            handleDown=()=>{
+                this.setState(prevState =>  ({count: prevState.count - 1})  )          
+            }
+
+            render(){
+                console.log('render', this.state)
+                console.log('inside render',this)
+                return(
+                    <div>
+                        <h1>This is class component</h1>
+                        <h2>{this.state.count}</h2>
+                        <UpButton btnName="Up" funName={this.handleUp}/>&nbsp; &nbsp;
+                        <DownButton btnName="Down" funName={this.handleDown}/>
+                    </div>
+                )
+            }
+        }
+
+        function UpButton(props){
+            return <button onClick={props.funName}>{props.btnName}</button>     //props.funName => this.handleUp
+        }
+
+        function DownButton(props){
+            return <button onClick={props.funName}>{props.btnName}</button> 
+        }
+
+        const ele = (
+            <div>
+            <Counter />
+            </div>
+        )
+        ReactDOM.render(ele , rootHandle)
+
+        
+    </script>
+    </body>
+</html>

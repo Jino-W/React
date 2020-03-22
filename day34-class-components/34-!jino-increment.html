@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+
+        class Change extends React.Component{
+            constructor(){
+                super()
+                this.state={
+                    count:0
+                }
+                //this.increment=this.increment.bind(this)
+            }
+
+            increment(){
+                this.setState((data) => {
+                    return {count:data.count+5}
+                })
+                
+                //console.log('set state value',value)
+            }
+
+           reset=() => {
+                this.setState({count: 0})
+                console.log('state',this.state)
+            }
+
+            render(){
+                console.log('state',this.state)
+                return(
+                    <React.Fragment>
+                        <h2>{this.state.count}</h2>
+                        <button onClick={this.increment.bind(this)}>Increment</button>
+                        {/*<button onClick={function(){
+                            this.setState( data =>{
+                                return {count:0}
+                            })
+                        }.bind(this)}>Reset</button>*/}
+                        <button onClick={this.reset}>Reset</button>
+                    </React.Fragment>
+                )
+            }
+        }
+
+        const ele=(
+            <React.Fragment>
+            <Change/>
+            <Change/>
+            </React.Fragment>
+        )
+
+        ReactDOM.render(ele,rootHandle)
+        
+    </script>
+    </body>
+</html>

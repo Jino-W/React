@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+
+        const links = [
+            {id:1, name:"facebook",rating:4.3},
+            {id:2, name:"google",rating:5}
+        ]
+
+        function SocialLink(props){
+            return (
+                <div>
+                <h2>Total websites -{props.links.length}</h2>
+                <ul>{
+                props.links.map((link,index)=>{
+                    return(
+                        <li key={index}><a href="#">{link.name}</a></li>
+                    )
+                })
+                }</ul>
+                </div>
+            )
+        }
+
+        const ele = <SocialLink links ={links} />
+        ReactDOM.render(ele, rootHandle)
+
+    </script>
+    </body>
+</html>

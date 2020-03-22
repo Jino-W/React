@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+
+        function Clock(props) {       //props ={date: new Date()}      function Constructor =>  Presentation Component
+        console.log("Constructor Function")  - 3, 5, 7
+            return (
+                <div>
+                    <h1>Hello, world!</h1>
+                    <h2>It is {props.date.toLocaleTimeString()}.</h2>
+                </div>
+            );
+        }
+
+        function tick() {
+            console.log("Function")   - 2, 4, 6
+            ReactDOM.render(
+                <Clock date={new Date()} />,
+                document.getElementById('root')
+            );
+        }
+
+        console.log("outside Function")   - 1
+        setInterval(tick, 1000);         //setInterval(function, timeInterval in seconds);
+
+
+    </script>
+    </body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+        const greet = 'hello'
+        const fName = 'jno'
+        const lName = 'esther'
+        const h1 = <h1>{greet} {fName} {lName}</h1>
+
+        ReactDOM.render(h1, rootHandle)
+
+        
+    </script>
+    </body>
+</html>

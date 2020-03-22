@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Raffel-draw</title>
+        <link href="../twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+
+    </head>
+    <body>
+        <div id ="root"></div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+    const rootHandle = document.getElementById('root')
+
+        class Raffle extends React.Component{
+            constructor(){
+                super()
+                this.state={
+                    users: ["jino", "deepika", "deeksha", "sam", "minu", "jim"],
+                    removedItem: "-"
+                }
+            }
+
+            handleClick=()=>{
+                this.setState(prevState=>{
+                    let i = Math.floor(Math.random()*prevState.users.length)
+                    let removedItem="-"
+                    console.log(i)
+                    return {users: prevState.users.filter((user, index)=>{
+                        removedItem = prevState.users[i]
+                        return index !== i}), removedItem: removedItem}
+                })
+            }
+
+            render(){
+                return(
+                    <div className="row">
+                        <div className="col-md-6 offset-md-3">
+                            <h1>Draw Users</h1>
+                            <h3>{this.state.removedItem}</h3>
+                            <hr/>
+                            {this.state.users.length == 0  && <p>no users to display</p>}
+                            <ul className="list-group">
+                                {this.state.users.map((user,index)=>{
+                                    return <li className="list-group-item text-center" key={index}><span className="col-md-4">{user}</span></li>
+                                })}
+                            </ul>
+                            <button className="btn btn-primary btn-lg btn-block" onClick={this.handleClick}>Draw</button>
+                        </div>
+                    </div>
+                )
+            }
+        }
+        function App(){
+            return (
+                <div className="container">
+                    <Raffle />
+                </div>
+            )
+        }
+
+        ReactDOM.render(<App />, rootHandle)
+    </script>
+    </body>
+</html>

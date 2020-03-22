@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+
+        class Tasklist extends React.Component{
+            constructor(props){
+                super()
+                this.id=props.id
+                this.state = {
+                    projInput:'',
+                    tasks:[]
+                }
+            }
+
+            projInputHandle = (e) =>{
+                const value=e.target.value
+                this.setState({projInput:value})
+            }
+
+            submitHandle = (e) =>{
+                //e.stopPropagation()
+                e.preventDefault()
+                console.log('inside Submit',this.state.tasks)
+            }
+
+            addTask = (e) => {
+                //e.stopPropagation()
+                this.setState(data => {
+                    data.tasks.push('')
+                    return {tasks:data.tasks}
+                })
+            }
+
+            removeTask = (e,index) => {
+                //e.stopPropagation()
+                this.setState((data)=>{
+                    data.tasks.splice(index,1)
+                    return {tasks:data.tasks}
+                })
+            }
+
+            inputHandle = (e,index) =>{
+                const value = e.target.value
+                this.setState(data => {
+                    data.tasks[index] = value
+                    return {tasks:data.tasks}
+                })
+            }
+
+            render(){
+                return(
+                    <div>
+                        <form onSubmit={this.submitHandle}>
+                            <input type='text' value={this.state.projInput} onChange={this.projInputHandle}/><br/>
+                            <h2>Tasklist - {this.id}</h2>
+                            <button type="button" onClick={this.addTask}>Add Task</button>&nbsp;&nbsp;
+                            <input type="submit" value="Submit" />
+                            {this.state.tasks.map( (task,index)=>{
+                                return(
+                                    <div key={index}>
+                                        <br/>
+                                        <input type='text' value={task} onChange={ (e) => { this.inputHandle(e,index) }}/>&nbsp;&nbsp;
+                                        <button type="button" onClick={(e)=>{
+                                            this.removeTask(e,index)
+                                        }}>Remove</button>
+                                    </div>
+                                )
+                            })}
+                        </form>
+                    </div>
+                )
+            }
+        }
+
+        class Project extends React.Component{
+            constructor(){
+                super()
+                this.state={
+                    count:0,
+                    projects:[]
+                }
+            }
+
+            removeProject =(id) =>{
+                this.setState( data => {
+                    const newProject = data.projects.filter((item)=> item.id != id)
+                    return {projects:newProject}
+                })
+            }
+
+            addProject = () => {
+                this.setState(data => {
+                    data.projects.push({id:data.count+1,project:<Tasklist id={data.count+1}/>})
+                    
+                    return {count:data.count+1,projects:data.projects}
+                })
+            }
+
+            render(){
+                return(
+                    <div>
+                        <h1>Click below button to Add a new project</h1>
+                        <button onClick={this.addProject}>Add Project</button><br/><br/>
+                        <hr/>
+                        {this.state.projects.map( (project) => {
+                            return(
+                                <div key={project.id}>
+                                    {project.project}
+                                    <br/><button onClick={()=>{
+                                        if(confirm("Do you want to Delete the Task?")){
+                                            this.removeProject(project.id)
+                                        }
+                                    }}>Remove Project</button><br/><hr/>
+                                </div>
+                            )
+                        })}
+                    </div>
+                )
+            }
+        }
+
+        const rootHandle = document.getElementById('root')
+        ReactDOM.render(<Project/>,rootHandle)
+        
+    </script>
+    </body>
+</html>

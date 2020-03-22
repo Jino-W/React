@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+
+    <title>1-react elements</title>
+
+    </head>
+
+    <body>
+
+      <div id="root">
+
+
+
+      </div>
+
+      <script src="../js/react.development.js"></script>
+
+    <script src="../js/react-dom.development.js"></script>
+
+    <script src="../js/babel.js"></script>
+
+
+
+
+
+    <script type="text/babel">
+
+        const rootHandle=document.getElementById('root')
+
+        class TextAreaLoad extends React.Component{
+
+          constructor(){
+
+            super()
+
+            this.state={
+                txt:''
+            }
+
+          }
+
+          handleChange=(event)=>{
+
+            let k=event.target.value
+
+            this.setState((prevState)=>{
+
+              return{
+
+                txt: k       //localStorage.setItem('txt',JSON.stringify(k))
+
+              }
+
+            })
+            localStorage.setItem('txt',k)   //localStorage.setItem('txt',JSON.stringify(k))
+
+          }
+
+          componentDidMount=()=>{
+
+          if(JSON.parse(localStorage.getItem('txt'))!=null){
+
+          this.setState((prevState)=>{
+
+              return{
+
+                txt: localStorage.getItem('txt')   //JSON.parse(localStorage.getItem('txt'))
+
+              }
+
+            })
+
+          }
+
+          }
+
+
+
+          render(){
+              console.log(this.state.txt)
+
+            return(
+
+            <div>
+
+                <textarea onChange={this.handleChange} value={this.state.txt}></textarea>
+
+            </div>
+
+            )
+
+          }
+
+        }
+
+        ReactDOM.render(<TextAreaLoad/>,rootHandle)
+
+
+
+    </script>
+
+    </body>
+
+
+
+</html>

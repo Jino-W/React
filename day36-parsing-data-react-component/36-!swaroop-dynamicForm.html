@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Dynamic Form</title>
+        <style>h2{
+                
+                color: brown;
+                text-align: center;
+            };</style>
+    </head>
+    <body>
+        <div id='root'>
+
+        </div>
+        <script src='../js//react.development.js'></script>
+        <script src='../js//react-dom.development.js'></script>
+        <script src='../js/babel.js'></script>
+        <script type='text/babel'>
+            const rootHandle=document.getElementById('root')
+ 
+            class DynamicForm extends React.Component{
+                constructor(){
+                    super()
+                    this.state={
+                        pName:'',
+                        proj:[]
+                    }
+                    this.projectName=this.projectName.bind(this)
+                    this.taskName=this.taskName.bind(this)
+                }
+
+                projectName(event){
+                    const pName=event.target.value
+                    this.setState({pName})  
+                }
+
+                taskName(event,index){
+                    const Tname=event.target.value
+                    this.setState(prevState=>{
+                        prevState.proj[index].Tname=Tname
+                    })
+                }
+
+                addTask=()=>{
+                    event.preventDefault()
+                    const Tname=''
+                    const id=Math.round(Math.random()*1000)
+                    this.state.proj.push({id,Tname})
+
+                    this.setState(prevState=>{
+                        return {
+                            proj:prevState.proj
+                        }
+                    })
+                    // console.log(this.state.proj)
+                }
+
+                removeHandle(event,index){
+                    this.state.proj.splice(index,1)
+                    this.setState(prevState=>{
+                       return {
+                            proj:prevState.proj
+                    }})
+                }
+
+                submitHandle=(event)=>{
+                    event.preventDefault()
+                    const finData={
+                        pName:this.state.pName,
+                        proj:this.state.proj
+                    }
+                    console.log(finData)
+                }
+
+                render(){
+                    // console.log(this.state.proj)
+                    return (
+                        <form onSubmit={this.submitHandle}>
+                            <h2>Dynamic Form-{this.state.proj.length}</h2>
+                            <hr/>
+                            <br/>name:
+                            &nbsp;<input type='text' value={this.state.pName} onChange={this.projectName}/>
+                            <br />
+                            {this.state.proj.map((pro,index)=>(
+                                <label key={pro.id}>Task:
+                                    &nbsp;&nbsp;<input type='text' onChange={e=>this.taskName(e,index)}/>
+                                    <button onClick={(e)=>this.removeHandle(e,index)}>remove</button>
+                                    <br/>
+                                </label>
+                            ))}
+                            
+                            <br/>                          
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button onClick={this.addTask}>Add Task</button>
+                            <input type='submit'/>
+                        </form>
+                    )
+                }
+            }
+
+            
+            ReactDOM.render(<DynamicForm />,rootHandle)
+        </script>
+    </body>
+</html>

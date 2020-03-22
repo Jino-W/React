@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Bootstrap-Grid-List</title>
+        <link href="css/bootstrap.css" rel="stylesheet" />
+
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+
+        const fruits = ['apple','mango','jackfruit','chikoo']
+
+        function Fruits(){
+            return (
+                <div>
+                    <div className="row">
+
+                        <div className="col-md-6">
+                            <h2>Listing fruits - {fruits.length}</h2>
+                            <ul className="list-group">
+                                {fruits.map(function(fruit, index){
+                                    return <li key={index} className="list-group-item" >{fruit.toUpperCase()}</li>
+                                })}
+                            </ul>
+                        </div> 
+
+                        <div className="col-md-6">
+                            <h2>Listing fruits - {fruits.length}</h2>
+                            <ul className="list-group">
+                                {fruits.map(function(fruit, index){
+                                    return <li key={index} className="list-group-item" >{fruit.toUpperCase()}</li>
+                                })}
+                            </ul>
+                        </div> 
+                        
+                    </div>
+                </div>
+            )
+        }
+
+
+        function App(){
+            return(
+                <div className="container">
+                    <Fruits />
+                </div>
+            )
+        }
+        ReactDOM.render(<App />,rootHandle)
+        
+    </script>
+    </body>
+</html>

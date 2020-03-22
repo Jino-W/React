@@ -1,0 +1,22 @@
+
+1) axios
+
+2) babel
+
+3) react-dom.development
+
+4) react.development
+
+5) npm install -g create-react-app
+
+6) cd foldername
+ npm start
+
+5) datepicker
+
+npm install react-datepicker --save
+(or)
+yarn add react-datepicker
+
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";

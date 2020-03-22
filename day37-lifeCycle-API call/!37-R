@@ -1,0 +1,35 @@
+- 1) xhr request:
+    -> xhr.onload = function(){}     //call back function to get response form the server
+    -> xhr.onerror = function(){}     //error function
+
+- 2) Fetch request:
+    -> The fetch function takes one mandatory argument, which is the path to the resource you want to fetch and returns a Promise that resolves to the Response of that request.
+    -> The Fetch API provides a JavaScript interface for accessing and manipulating parts of the HTTP pipeline, such as requests and responses. 
+    
+    -> fetch(url)
+    -> To get the json object response: in fetch call the json() function on the response object
+        .then((response)=>{
+            return response.json()
+        })
+        .then((user)=>{
+            this.setState({user:user})
+        })
+
+- Promise:
+    -> A promise is an object that may produce a single value or a resolved value, or a reason that it's not resolved (e.g., a network error occurred). A promise may be in one of 3 possible states: fulfilled, rejected, or pending.
+
+
+- componentDidMount:
+    -> componentDidMount is invoked only on the client.
+    -> The componentDidMount() method runs after the first render of DOM. 
+    -> This is a good place to set up a timer
+    -> This is a good place to get data from the server
+
+
+- componentWillMount:
+    -> componentWillMount is invoked on the client/server
+    -> The componentWillMount() method runs before the first render of DOM. (componentWillMount is done before the INITIAL render of a component)
+    -> componentWillMount is essentially the constructor. 
+    -> You can set instance properties that don't affect render, pull data from a store synchronously and setState with it, and other simple side effect free code you need to run when setting up your component.
+    -> It's rarely needed, and not at all with ES6 classes.
+    -> and it is used to assess props and do any extra logic based upon them (usually to also update state), and as such can be performed on the server in order to get the first server side rendered markup.

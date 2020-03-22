@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+
+        function Person(props){
+            return <p> {props.name}-{props.age}-{props.marks.join('-')}-{props.details.address} </p> //-{props.details}  -> objects cannot be printed in javascript
+        }
+
+        ReactDOM.render(<Person name='jino' age={23} marks={[90,95,80]} details={{address:"bangalore"}} /> ,rootHandle) 
+        //other the strings (number, array, object) use jsx-Expression {}
+        
+    </script>
+    </body>
+</html>

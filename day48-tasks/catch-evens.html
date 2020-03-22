@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Catch Evens</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+    const rootHandle = document.getElementById('root')
+
+    class Evens extends React.Component {
+        constructor() {
+            super()
+            this.state = {
+                randomNum: null,
+                even:[]
+            }
+        }
+
+        componentDidMount() {
+            this.timerID = setInterval(() => {
+                this.random()
+            },1000)
+        }
+
+        random() {
+            this.setState({ randomNum: Math.round(Math.random()*100) })
+            this.setState(prevState=>{
+                if(prevState.randomNum %2 === 0){
+                    prevState.even.push(prevState.randomNum)
+                    this.setState({ even: prevState.even })
+                }
+            })
+        }
+
+        render() {
+            return (
+            <div>
+                <h1>{this.state.randomNum}</h1>
+                <ul>{
+                    this.state.even.map(n=>{
+                        return <li>{n}</li>
+                    })
+                }</ul>
+
+            </div>
+            )
+        }
+    }
+
+    ReactDOM.render(<Evens />, rootHandle)
+
+    </script>
+    </body>
+</html>

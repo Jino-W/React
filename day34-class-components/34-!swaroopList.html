@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TO DO LIST</title>
+        <style>
+            div {
+                text-align: center;
+            };
+            ul {
+                text-align: start
+            }
+        </style>
+    </head>
+    <body>
+        <div id='root'>
+
+        </div>
+        <script src='../js//react.development.js'></script>
+        <script src='../js//react-dom.development.js'></script>
+        <script src='../js/babel.js'></script>
+        <script type='text/babel'>
+            const rootHandle=document.getElementById('root')
+
+            const array= ['hari']
+
+            function promptCall(){
+                const promptText = prompt('enter the task')
+                if(promptText.length !==0){
+                    array.push(promptText)
+                }else if(promptText.length == 0){
+                    alert('required')
+                }
+            }
+            
+            const ele =(
+                <div>
+                <button onClick={promptCall}>Click Me</button>
+                    <ul>{
+                        array.map((a)=>{
+                            console.log(array, a)
+                            return <li>{a}</li>
+                        })
+                    }</ul>
+                </div>
+            )
+            
+            ReactDOM.render(ele,rootHandle)
+            
+        </script>
+    </body>
+</html>

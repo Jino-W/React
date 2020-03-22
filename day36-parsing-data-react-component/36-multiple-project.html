@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+
+        class AddProjects extends React.Component{
+            constructor(){
+                super()
+                this.state={
+                    taskCount : 0,
+                    allProjects : [],
+                    file:{
+                        projectHead:'',
+                        project:[]
+                    }
+                }
+            }
+
+            addTask=()=>{
+                const id = (Math.random()*100000).toPrecision(5)
+                this.setState(prevState => {
+                    prevState.file.project.push({id:id,task:''})
+                    return { file: { projectHead : prevState.file.projectHead, project : prevState.file.project } }
+                })
+            }
+
+            writingTask = (e, index)=>{
+                const value = e.target.value
+                this.setState((prevState)=>{
+                    prevState.file.project[index].task=value
+                    return {file: {projectHead: prevState.file.projectHead, project: prevState.file.project}}
+                })
+            }
+
+            removingTask=(e,id)=>{
+                this.setState((prevState)=>{
+                    const array = prevState.file.project.filter(task => task.id !== id)
+                    return {file: {projectHead: prevState.file.projectHead, project: array}}
+                })
+            }     
+            
+            addProject=()=>{
+                this.setState(prevState => {
+                    prevState.allProjects.push({})
+                    return { allProjects: prevState.allProjects}
+                })
+            }
+            
+            writingProject = (e, i)=>{
+                const value = e.target.value
+                this.setState((prevState)=>{
+                    prevState.allProjects[index].projectHead=value
+                    return {allProjects: prevState.file}
+                })
+            }
+
+            removingProject=(e,i)=>{
+                this.setState((prevState)=>{
+                    const array = prevState.allProjects.filter(project => prevState.allProjects.indexOf(project) !== i)
+                    return {allProjects: array}
+                })
+            } 
+
+            render(){
+                console.log(this.state.file)
+                return(
+                    <div>
+                        <h2>Add Project</h2>
+                        <hr/>
+                        <br/>
+                        <button onClick={()=>{ this.addProject() }}>Add project</button><br/><br/>
+                        {   
+                            this.state.allProjects.map((project, i)=>{
+                                return (
+                                    <div key={i}>
+                                        <lable>Project:
+                                            <input type="text" value={this.state.allProjects[i].projectHead} onChange={(e)=>{
+                                                this.writingProject(e,i)
+                                            }}/>&nbsp;&nbsp;
+                                        </lable>
+                                    
+                                
+                                {
+                                
+                                    this.state.file.project.map((task, index)=>{
+                                        return (
+                                            <div key={index}>
+                                                &nbsp; &nbsp; &nbsp; &nbsp; 
+                                                <label>Task: &nbsp;
+                                                    <input type = "text" value = {this.state.file.project[index].task} onChange={(e)=>{
+                                                        this.writingTask(e,index) 
+                                                    }}/> &nbsp;&nbsp;
+                                                    <button onClick={(e)=>{ this.removingTask(e,task.id) }}>remove task</button>
+                                                </label><br/><br/>
+                                            </div>
+                                        )
+                                    })
+                                }
+
+                                    <button onClick={(e)=>{ this.removingProject(e, i) }}>remove project</button><br/> <br/>
+                                </div>
+                                )
+                            })
+                            
+                        }
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button onClick={()=>{ this.addTask() }}>Add Task</button> &nbsp; &nbsp;
+                        <button>Submit</button>
+                    </div>
+                )
+            }
+        }
+
+        const ele = <AddProjects />
+
+        ReactDOM.render(ele, rootHandle) 
+    </script>
+    </body>
+</html>

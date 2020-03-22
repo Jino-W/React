@@ -1,0 +1,4 @@
+- JSX:
+    -> “components” that contain both markup(HTML like structure) and logic(ja or react)
+    -> React doesn’t require using JSX, but most people find it helpful as a visual aid(help/assist) when working with UI inside the JavaScript code. 
+    -> It also allows React to show more useful error and warning messages.

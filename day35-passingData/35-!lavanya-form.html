@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <div id = "root">
+
+        </div>
+        
+        <script src="../js/react.development.js"></script>
+        <script src="../js/react-dom.development.js"></script>
+        <script src="../js/babel.js"></script>
+        <script type="text/babel">
+            const rootHandle = document.getElementById('root')
+
+            const formStyle = {
+                background: "#eee",
+                padding: "10px 20px ",
+                margin: "10px",
+                float: "left",
+                textAlign:"center"
+            };
+            
+            const lableStyle = {
+                margin: "0 0 10px"
+            };
+
+            class Count extends React.Component {
+                constructor () {
+                    super ()
+                    this.state = {
+                        words : '',
+                        characters : ''
+                    }
+                    this.handleWords = this.handleWords.bind(this)
+                }
+
+                handleWords(e) {
+                    console.log(e.target.value.split(' '))
+                    console.log(e.target.value.length)
+
+                    const words = e.target.value.split(' ')
+                    this.setState({ words })
+
+                    const characters = e.target.value
+                    this.setState({ characters })
+                }
+
+                render () {
+                    return (
+                        <div>
+                            <form style={formStyle} onSubmit={this.handleSubmit} >
+                                <label style={lableStyle}> <h2>word count</h2>
+                                    <textarea rows="4" cols="50" type="text" value={this.state.words} onChange={this.handleWords}></textarea>
+                                    <p>{`you have written ${this.state.words.length} words ${this.state.characters.length} characters`}</p>
+                                </label>
+                            </form>
+                        </div>
+                    )
+                }
+            }
+
+            ReactDOM.render(<Count />, rootHandle)
+        </script>
+    </body>
+</html>

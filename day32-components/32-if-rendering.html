@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Multiple-Users</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+
+        const user = [
+        {
+            name:'jino',
+            role:'admin'
+        },
+        {
+            name:'minu',
+            role:'user'
+        },
+        {
+            name:'hari',
+            role:'admin'
+        },
+        {
+            name:'sam',
+            role:'user'
+        },
+        {
+            name:'jim',
+            role:'user'
+        }
+        ]
+        
+
+        //if
+        const ele = (
+            <div>
+            <ul>{
+                //conditional rendering:
+                //Inline If with Logical && Operator  <= It can be handy for conditionally including an element
+            user.map((each)=>{
+                return <li> Name: {each.name} , Role: {each.role}    <a href ="#">Hint</a>   <a href ="#">Solve</a>   {each.role == "admin" && <a href ="#">Solution</a>}    {each.role == "admin" && <a href ="#">Delete</a>} </li>
+            }) 
+            }</ul> 
+            </div>
+        )
+
+        ReactDOM.render(ele, rootHandle)
+
+        
+    </script>
+    </body>
+</html>

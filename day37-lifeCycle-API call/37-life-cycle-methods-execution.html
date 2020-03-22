@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>up-down</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+
+        class Example extends React.Component{
+            constructor(){
+                super()
+                console.log("constructor")
+                this.state = {
+                    count: 0
+                }
+            }
+
+
+            handleClick=()=>{
+                console.log("button get clicket")
+                this.setState((prevState)=>{
+                    return {count: prevState.count + 1}
+                })
+            }
+
+ 
+
+            componentDidMount(){
+                console.log("componentDidMount")
+            }
+
+
+            render(){
+                console.log("render")
+                return(
+                    <div>
+                        <h2>{this.state.count}</h2>
+                        <button onClick ={this.handleClick}>click here</button>
+                    </div>
+                )
+            }
+        }
+        const ele = <Example/>
+
+        ReactDOM.render(ele, rootHandle) 
+    </script>
+    </body>
+</html>

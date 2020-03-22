@@ -1,0 +1,23 @@
+- user-defined components in React:
+    -> Elements can also represent user-defined components (other than <div>, <p>, <ul>, <h1> .   eg: <Restaurent />)
+    -> React treats components starting with lowercase letters as DOM tags. For example, <div /> represents an HTML div tag,
+    -> but <Welcome /> (i.e, components starting with lowercase letters) represents a component and requires Welcome to be in scope.
+    -> Components can refer to other components in their output 
+
+
+- Representing Component:
+    -> 1) When React sees an element representing a user-defined component(first letter Caps),   <Welcome name="Sara" />
+    -> 2) We call ReactDOM.render() with the <Welcome name="Sara" /> element.
+    -> 3) it passes JSX attributes to this component as a single object. We call this object “props”, {name: 'Sara'}
+    -> 4) return the JSX, return    function: <h1>Hello, {props.name}</h1> , class: <h1>Hello, {this.props.name}</h1>
+    -> 5) React DOM efficiently updates the DOM to match <h1>Hello, Sara</h1>
+
+
+- 1) function components: (constructor function)
+    -> Conceptually, components are like JavaScript functions.
+    -> They are Presentatioal components
+    -> 1) First letter Caps
+    -> 2) They accept arbitrary inputs or parameters (called “props” - (which stands for properties) 
+    -> 3) It should return React elements(i.e, jsx) describing what should appear on the screen.
+    
+

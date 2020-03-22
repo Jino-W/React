@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+
+
+const rootHandle=document.getElementById('root')
+                class TaskTable extends React.Component{
+                    constructor(){
+                        super()
+                        this.state={
+                            taskList:[]
+                            
+                        }  
+                    }
+                    clickHandle=()=>{
+                        let task=  prompt('Add your task')
+                        if(task!=null && task!=''){
+                        this.state.taskList.push({task:task, date:'23-08-2019', time:12})
+                        this.setState((prevState)=>
+                        {
+                            return{
+                                taskList:this.state.taskList
+                            }
+                        })
+                        localStorage.setItem('itemList',JSON.stringify(this.state.taskList))
+                    }
+                        else if(task==''){
+                            alert('Task can\'t be empty')
+                        }
+                    }
+                    delHandle=(index)=>{
+                        this.state.taskList.splice(index,1)
+                        this.setState((prevState)=>{
+                            return{
+                                taskList:this.state.taskList
+                            }
+                        })
+                        localStorage.setItem('itemList',JSON.stringify(this.state.taskList))
+                    }
+                    delall=()=>{
+                        this.setState((prevState)=>{
+                            return{
+                                taskList:[]
+                            }
+                        })
+                        localStorage.clear()
+                    }
+                    componentDidMount=()=>{
+                        if(JSON.parse(localStorage.getItem('itemList'))!=null)
+                        {
+                        this.setState(()=>{
+                            return{
+                               taskList:JSON.parse(localStorage.getItem('itemList')),
+                            }
+                        })
+                    }
+                    }
+                    render(){
+                        const head = {
+                            display: 'inline-block',
+                            padding: '16px',
+                            margin: '16px',
+                            border: '1px solid black',
+                            textAlign: 'center',
+                            backgroundColor: "lightblue"
+                        }
+                        const par={
+                            color:'blue',
+                            fontSize:'30px'
+                        }
+                        const style={
+                            border: "1px solid black",
+                            borderSpacing: "5px",
+                            
+                         }
+                        return(
+                            <div>
+                                <h1 style={head}>Welcome to To-DO-List App</h1>
+                                <p style={par} >You can now easily manage your daily tasks by adding your task here and remember to delete your task once it is done.Have a nice Day!!</p>
+                                <button type="button" className="btn btn-success" onClick={this.clickHandle} >Add Task</button>
+                                {this.state.taskList.length>0 && 
+                                    <div>
+                                    <br/>
+                                    <table style={style}>
+                                        <thead style={style}>
+                                            <tr style={style}>
+                                                <th style={style}>Task NO</th>
+                                                <th style={style}>Task Description</th>
+                                                <th style={style}>Date & Time</th>
+                                                <th style={style}>Delete Task</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {this.state.taskList.map((lst,i)=>{
+                                               return( 
+                                                    <TableRow key={i} style={style} list={lst.task} del={()=>this.delHandle(i)} dt={lst.date}taskNo={i}/> 
+                                               )
+                                            })}
+                                               
+                                        </tbody>
+                                    </table>
+                                    <br/>
+                                    <button type="button" className="btn btn-danger" onClick={this.delall}>Delete All Tasks</button>
+                                    </div>
+                                }
+                            </div>
+                        )
+                    }
+                }
+                function TableRow(props){ 
+                    return( 
+                    <tr>
+                        <td style={props.style}>{props.taskNo+1}</td>
+                        <td style={props.style}>{props.list}</td>
+                        <td style={props.style}>{props.dt}</td>
+                        <td style={props.style}><button onClick={props.del}>Delete</button></td>
+                    </tr>
+                    )         
+                }
+            ReactDOM.render(<TaskTable/>,rootHandle)
+    </script> 
+    </body>
+</html>

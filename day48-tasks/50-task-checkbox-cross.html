@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CheckBox</title>
+    </head>
+    <body>
+        <div id ="root"></div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+    const rootHandle = document.getElementById('root')
+
+        class ToDoList extends React.Component{
+            constructor(){
+                super()
+                this.state={
+                    lists: [],
+                    todo: ""
+                }
+            }
+
+            handleText=(e)=>{
+                this.setState({[e.target.name]: e.target.value})
+            }
+
+            handleCheck=(index, e)=>{
+                this.setState(prevState=>{
+                    prevState.lists[index].isChecked = !prevState.lists[index].isChecked
+                    return {lists: prevState.lists}
+                })
+            }
+
+            handleSubmit=(e)=>{
+                e.preventDefault()
+                this.setState((prevState)=>{
+                    prevState.lists.push({isChecked:false, task: prevState.todo})
+                    return {lists: prevState.lists, todo: ""}
+                })
+            }
+
+            render(){
+                console.log("lists:",this.state.lists, "todo:",this.state.todo)
+                return(
+                    <div>
+                        <h2>Listing Items {this.state.lists.length}</h2>
+                        <ul>{
+                            this.state.lists.map((list, index)=>{
+                                return (
+                                    <div key={index}>
+                                        <label>
+                                                <input type="checkbox" checked={list.isChecked} onChange={()=>{this.handleCheck(index)}} />
+                                                <span style={{textDecorationLine: list.isChecked  && 'line-through'}}>{list.task}</span>
+                                        </label>    
+                                    </div>
+                                )
+                            })
+                        }</ul>
+                        <div>
+                            <input type="text" name="todo" placeholder="Add ToDoList" value={this.state.todo} onChange={this.handleText} /> &nbsp;
+                            <button onClick={this.handleSubmit} >submit</button>
+                        </div>
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(<ToDoList />, rootHandle)
+    </script>
+    </body>
+</html>

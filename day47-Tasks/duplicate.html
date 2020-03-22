@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+
+        class CopyDup extends React.Component{
+            constructor(){
+                super()
+                this.state = {
+                    array : [{id: 1, details:["high", "low", "medium"]}]
+                }
+            }
+
+            handleCopy=(index,e)=>{
+                this.setState(prevState=>{
+                    const object1 = Object.assign({},prevState.array[index])
+                    object1.id = Math.round( Math.random() *100)
+                    prevState.array.push(object1)
+                    return {array : prevState.array}
+                })
+            }
+
+            handleDelete=(index,e)=>{
+                this.setState(prevState=>{
+                    prevState.array.splice(index,1)
+                    return {array : prevState.array}
+                })
+            }
+            
+
+            render(){
+                return(
+                    <div>
+                       <ul>{
+                            this.state.array.map((each,index)=>{
+                                return (
+                                    <div key={each.id}>
+                                        <p>id: {each.id}</p> 
+                                        {each.details.map(item=>{
+                                            return <li>{item}</li>
+                                        })}
+                                        <input value = "copy" type="submit" onClick={()=>{
+                                            this.handleCopy(index)
+                                        }} />
+                                        <input value = "delete" type="submit" onClick={()=>{
+                                            this.handleDelete(index)
+                                        }} />
+                                    </div>
+                                )
+                            })
+                        }</ul>
+                        
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(<CopyDup /> , rootHandle)
+
+        
+    </script>
+    </body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+
+        class HideShow extends React.Component{
+            constructor(){
+                super()
+                this.state = {
+                    isOption : true
+                }
+            }
+            
+
+            submitHandle=(e)=>{
+                e.preventDefault()
+                this.setState(prevState=>{
+                    return {isOption: !prevState.isOption}
+                })
+            }
+
+            render(){
+                return(
+                    <div>
+                        {this.state.isOption && <h2>Hello World!</h2>}
+                        <input type="submit" value = {this.state.isOption ? "hide" : "show"} onClick={this.submitHandle} />
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(<HideShow /> , rootHandle)
+
+        
+    </script>
+    </body>
+</html>

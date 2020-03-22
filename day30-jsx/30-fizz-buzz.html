@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+        const result = []
+        const object = {
+            cNum : 0,
+            cFizz : 0,
+            cBuzz : 0,
+            cFizzBuzz : 0
+        }
+        
+
+        for(let i=1;i<=100;i++){
+            if(i%15==0){    //i%3==0 && i%5==0
+                    result.push('fizzbuzz')
+                    ++object.cFizzBuzz
+                }else if(i%3==0){
+                    result.push('fizz')
+                    ++object.cFizz
+                }else if(i%5==0){
+                    result.push('buzz')
+                    ++object.cBuzz
+                }else{
+                    result.push(i)
+                    ++object.cNum
+                }
+        }
+        
+        const element = (
+        <div>
+            <ul>{
+                result.map(function(r){
+                    return <li>{r}</li>
+                })
+            }
+            </ul>
+
+            <h1>fizz-buzz</h1>
+            <table cellpadding = "5" border= "1">
+                <thead>
+                    <tr>
+                        <th>Number</th>
+                        <th>fizzbuzz</th>
+                        <th>fizz</th>
+                        <th>buzz</th>                      
+                    </tr>
+                </thead>          
+            <tbody>
+                    <tr>
+                        <td>{object.cNum}</td>
+                        <td>{object.cFizzBuzz}</td>
+                        <td>{object.cFizz}</td>
+                        <td>{object.cBuzz}</td>
+                    </tr>
+            </tbody>
+            </table>
+        </div>
+
+        )
+        ReactDOM.render(element,rootHandle)
+
+        
+    </script>
+    </body>
+</html>

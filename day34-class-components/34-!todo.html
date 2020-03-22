@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+        class Todo extends React.Component{
+            constructor(){
+                super()
+                this.state={
+                    tasks:[]
+                }
+            }
+
+            addTask = () =>{
+                const promptText = prompt("Enter a task")
+                if(promptText.length == 0){
+                    alert('Task can\'t be Empty')
+                }else{
+                    this.setState(data =>{
+                        const current_datetime = new Date()
+                        const formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" + current_datetime.getSeconds()
+                        data.tasks.push({task:promptText,dateCreated: formatted_date})
+                        return {tasks: data.tasks}
+                    })
+                }
+
+            }
+
+            updateTask = (index) => {
+                const newName = prompt('Enter new Task Name')
+                const current_datetime = new Date()
+                const formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" + current_datetime.getSeconds()
+
+                if(newName.length == 0){
+                    alert('Task can\'t be Empty')
+                }else{
+                    this.setState((data) => {
+                        data.tasks[index].dateCreated=formatted_date
+                        data.tasks[index].task = newName
+                        return {tasks:data.tasks}
+                    })
+                }
+            }
+
+            deleteTask = (index) => {
+                this.setState((data) => {
+                    data.tasks.splice(index,1)
+                    return {tasks:data.tasks}
+                })
+            }
+
+            render(){
+                return(<div>
+                    <h2>Todo List</h2>
+                    <table border='solid 1px'>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Task</th>
+                                <th>Date Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.state.tasks.map((item,index) =>{
+                                return (<tr key = {index}>
+                                    <td>{index+1}</td>
+                                    <td>{item.task}</td>
+                                    <td>{item.dateCreated}</td>
+                                    <td>
+                                        <a href='#' onClick={() => {
+                                            this.updateTask(index)
+                                        }}>Update</a><br/>
+                                        <a href='#' onClick={() => {
+                                            this.deleteTask(index)
+                                        }}>Delete</a>
+                                    </td>
+                                </tr>)
+                            })}
+                        </tbody>
+                    </table><br/><br/>
+                    <button onClick={this.addTask}>Add Task</button>
+                </div>)
+            }
+        }
+        
+        const data=[]
+        
+        const ele=<Todo/>
+        ReactDOM.render(ele,rootHandle)
+    </script>
+    </body>
+</html>

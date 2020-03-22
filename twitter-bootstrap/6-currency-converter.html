@@ -1,0 +1,79 @@
+<html>
+    <head>
+        <title>user-checkbox</title>
+        <link href="css/bootstrap.css" rel="stylesheet" />
+
+    </head>
+    <body>
+        <div id = "root">
+
+        </div>
+        <script src="../js/react.development.js"></script>
+        <script src="../js/react-dom.development.js"></script>
+        <script src="../js/babel.js"></script>
+        <script src="../js/axios.js"></script>
+        <script type="text/babel">
+        
+            const rootHandle = document.getElementById('root')
+           
+            class Currency extends React.Component {
+                constructor() {
+                    super() 
+                    this.state = {
+                        value: "",
+                        $: 0,
+                        rupee: 0
+                    }
+                }
+
+                componentDidMount() {
+                    console.log("componentDidMount")
+                    axios.get("https://cors-anywhere.herokuapp.com/https://tm-marketdata.com/api/v1/convert?from=USD&to=INR&amount=1000&api_key=61sE20wON5YI0LA9Bimi")
+                    .then((response) => {
+                        const value = response.data
+                        console.log(value)
+                        this.setState({value})
+                    }) 
+                    .catch((err) => {
+                        alert(err)
+                    }) 
+                }
+
+                handleChange=(e)=>{
+                    const $ = e.target.value
+                    this.setState(prevState=>{
+                        return {$, rupee: ($* prevState.value.quote).toFixed(2)}
+                    })
+                }
+
+
+                render() {
+                    console.log(this.state.value)
+                    return (
+                        <div className="card">
+                            <h3>Currency Converter</h3>
+                            <p>1 USD = {this.state.value.quote} INR</p>
+                            <div>
+                                <form action="/action_page.php">
+                                    $: <input type="range" defaultValue="0" name="$" step="1" name="points" min="0" max="200" onChange={this.handleChange}/>
+                                </form>
+                            </div>
+                            <p><strong>{this.state.value.base_currency}</strong>: {this.state.$}</p>
+                            <p><strong className="card-title">{this.state.value.quote_currency}</strong>: {this.state.rupee} </p>
+                        </div>
+                    )
+                }
+            }
+
+            function App(){
+                return(
+                    <div className="container">
+                        <Currency />
+                    </div>
+                )
+            }
+            ReactDOM.render(<App/> ,rootHandle)
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+
+    <title>1-react elements</title>
+
+    </head>
+
+    <body>
+
+      <div id="root">
+
+
+
+      </div>
+
+      <script src="../js/react.development.js"></script>
+
+    <script src="../js/react-dom.development.js"></script>
+
+    <script src="../js/babel.js"></script>
+
+
+
+
+
+    <script type="text/babel">
+
+        const rootHandle=document.getElementById('root')
+
+        class Dynamic extends React.Component{
+
+          constructor(){
+
+            super()
+
+            this.state={
+
+              projects:[
+
+              {projectName:'',taskList:[]}
+
+              ]
+
+            }
+
+          }
+
+          projectNameHandle=(event)=>{
+
+            this.state.projects[0].projectName=event.target.value
+
+          }
+
+          handleAddTask=()=>{
+
+            this.state.projects[0].taskList.push({id:Math.round(Math.random()*1000),taskName:''})
+
+            this.setState((prevState)=>{
+
+              return{
+
+              projects:this.state.projects
+
+              }
+
+            })
+
+          }
+
+          taskNameHandle=(e,i)=>{
+            const value=e.target.value
+            this.setState(prevState =>{
+                prevState.projects[0].taskList[i].taskName=value
+                return {projects:prevState.projects}
+            })
+        }
+
+          removeHandle=(i)=>{
+
+            this.state.projects[0].taskList= this.state.projects[0].taskList.filter((p)=>p.id!=i)
+
+            console.log(this.state.projects[0].taskList)
+
+            this.setState((prevState)=>{
+
+              return{
+
+             projects:prevState.projects
+
+              }
+
+           })
+
+          }
+
+
+
+          submitHandle=(event)=>{
+
+            event.preventDefault()
+
+           console.log(this.state)
+
+          }
+
+
+
+          render(){
+
+            console.log(this.state)
+
+            return(
+
+              <div>
+
+              <h1>Hey!! Enter the project name in the below field and later you can add & delete the tasks for the same.</h1>
+
+              <h2>Add Project</h2>
+
+              <form onSubmit={this.submitHandle}>
+
+              <label>Project Name:
+
+              <input type="text" autoFocus required onChange={this.projectNameHandle}/>
+
+              <br/>
+
+              </label>
+
+
+
+              {this.state.projects[0].taskList.map((p,i)=>{
+
+                return(
+
+                  <div key={p.id}>
+
+                    <input type="text" autoFocus required onChange={(e)=>{this.taskNameHandle(e,i)}}/>
+
+                  <button onClick={()=>this.removeHandle(p.id)}>Remove</button>
+
+                  </div>
+
+                )
+
+              })}
+
+              <br/>
+
+              <button onClick={this.handleAddTask}>Add Task</button>
+
+              <input type="Submit"/>
+
+              </form>
+
+
+
+              </div>
+
+            )
+
+          }
+
+        }
+
+        ReactDOM.render(<Dynamic/>,rootHandle)
+
+
+
+    </script>
+
+    </body>
+
+
+
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+
+        class BgColor extends React.Component{
+            constructor(){
+                super()
+                this.state = {
+                    family : ["Wilson Anandaraj", "Judi", "Jino", "Minu", "Sam", "Jim"],
+                    selectColor: ""
+                }
+            }
+            
+            optionHandle=(e)=>{
+                this.setState(
+                    { [e.target.name] : e.target.value }
+                )
+            }
+
+            render(){
+                return(
+                    <div>
+                        <p style={{backgroundColor: this.state.selectColor}}>My Family</p>
+                        <select name="selectColor" value={this.state.selectColor} onChange={this.optionHandle}>
+                            <option value = "#FF0000">Red</option>
+                            <option value = "#808080">Gray</option>
+                            <option value = "#C0C0C0">Silver</option>
+                        </select>
+                    </div>
+
+                    // <div>
+                    //     <h2>My Family</h2>
+                    //     <ul>{
+                    //         this.state.family.map((member, index)=>{
+                    //             return (
+                    //                 <div key={index}>
+                    //                     <li key={index} style={{backgroundColor: this.state.selectColor}}>{member}</li>
+                    //                     <select key={index} name="selectColor" value={this.state.selectColor} onChange={this.optionHandle}>
+                    //                         <option value = "#FF0000">Red</option>
+                    //                         <option value = "#808080">Gray</option>
+                    //                         <option value = "#C0C0C0">Silver</option>
+                    //                     </select>
+                    //                 </div>
+                    //             )
+                    //         })
+                    //     }</ul>
+                        
+                    // </div>
+                )
+            }
+        }
+
+        const ele = (
+            <div>
+                <BgColor />
+                <BgColor />
+            </div>
+        )
+        ReactDOM.render( ele , rootHandle)
+
+        
+    </script>
+    </body>
+</html>

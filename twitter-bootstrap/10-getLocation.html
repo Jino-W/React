@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <div id = "root">
+
+        </div>
+        <script src="../js/react.development.js"></script>
+        <script src="../js/react-dom.development.js"></script>
+        <script src="../js/babel.js"></script>
+        <script src="../js/axios.js"></script>
+        <script type="text/babel">
+        
+            const rootHandle = document.getElementById('root')
+           
+            class UserList extends React.Component {
+                constructor() {
+                    super() 
+                    this.state = {
+                        lat: null,
+                        long: null,
+                        temperature: null
+                    }
+                    console.log("constructor")
+                }
+
+
+                getLocationHandle=()=>{
+                    navigator.geolocation.getCurrentPosition((position)=>{
+                        this.setState({lat: position.coords.latitude, long: position.coords.longitude})
+                    })
+                }
+
+
+                temperatureHandle=()=>{
+                    let temperature=null
+                    console.log("latlong",this.state.lat, this.state.long)
+                    axios.get(`https://api.darksky.net/forecast/100f1b5d3ff50678a038d2a663887132/${this.state.lat},${this.state.long}`)
+                        .then(response=>{
+                            console.log(response.data)
+                            console.log(response.data.currently.temperature)
+                            temperature =  response.data.currently.temperature
+                            this.setState(prevState=>{
+                                console.log("temp",temperature)
+                                return {temperature: temperature}
+                            })
+                        })
+                        .catch(err=>{
+                            console.log(err)
+                        })
+                }
+
+
+                render() {
+                    return (
+                        <div>
+                            <h2>Get User Info</h2>
+                            <button onClick={this.getLocationHandle}>Get Location</button>
+                            <p>Latitude: {this.state.lat}</p>
+                            <p>Longitude: {this.state.long}</p>
+                            <button onClick={this.temperatureHandle}>Get Temperature</button>
+                            <p>Temperature: {this.state.temperature}</p>
+                        </div>
+                    )
+                }
+            }
+
+            ReactDOM.render(<UserList/>, rootHandle)
+        </script>
+
+    </body>
+</html>

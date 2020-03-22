@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Event Handlers</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+
+        //3- possible ways of handling events in React
+
+        function Refering(){
+            console.log("Refer outer function")
+        }
+
+        function passArg(n){
+            console.log('passed arg = ', n)
+        }
+
+        const ele = (
+            <div>
+                <button onClick={()=>{
+                    console.log("Inline event handler")     //&nbsp;  -> spacing in jsx
+                }
+                }>Inline</button> &nbsp;
+
+                <button onClick={Refering}>Refering</button> &nbsp;
+                
+                
+                <button onClick={passArg(10)}>Passing arguments1</button>            {/*the function get called before the butten get clicked*/}
+                
+                
+                <button onClick={()=>{
+                    console.log("Passing arguments to the outer function within inline function")
+                    passArg(5)
+                }}>Passing arguments</button>
+                
+                
+            </div>
+        )
+
+        ReactDOM.render(ele, rootHandle)
+
+        
+    </script>
+    </body>
+</html>

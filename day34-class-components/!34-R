@@ -1,0 +1,76 @@
+//https://hackernoon.com/virtual-dom-in-reactjs-43a3fdb1d130
+
+- Virtual DOM:
+    -> A virtual DOM object is a representation of a DOM object, like a lightweight copy. 
+    -> A virtual DOM object has the same properties as a real DOM object, 
+    -> but it lacks the real thing's power to directly change what's on the screen. 
+    -> Manipulating the real DOM is slow.
+    -> Manipulating the virtual DOM is much faster, because nothing gets drawn onscreen
+    -> When you render a JSX element, every single virtual DOM object gets 'updated'.
+
+    -> Adv:
+        -> Re-builting of the entire realDOM can be avoided
+        -> Rebuilding a list is no big deal to a web browser, but modern websites can use huge amounts of DOM manipulation. 
+        -> Inefficient updating has become a serious problem.
+        -> To address this problem, the people at React popularized something called the virtual DOM.
+
+
+- In summary, here’s what happens when you try to update the DOM in React:
+    -> The entire virtual DOM gets updated.
+    -> The virtual DOM gets compared to what it looked like before you updated it. React figures out which objects have changed.
+    -> The changed objects, and the changed objects only, get updated on the real DOM.
+    -> Changes on the real DOM cause the screen to change.
+
+
+- Diffing: 
+    -> By comparing the new virtual DOM with a pre-update version, React figures out exactly which virtual DOM objects have changed. 
+    -> This process is called “diffing.”
+
+
+
+//----------------------------------------------------------------------------------------------
+
+
+- Reconciliation:
+    -> This concept'll tell us how react updates the DOM.
+    -> eg: #change-values.html
+        ->following are various activities React performs during reconciliation. For example, here are the high-level operations React performs during the first render and after state update in our simple application
+            1) 'updates' count property in the 'state' of ClickCounter
+            2) retrieves and 'compares' children of ClickCounter and their props
+            3) 'updates props' for the span element
+
+- Role of React elements:
+    -> 
+
+- Lifecycle methods:
+    -> constructor, render, componentWillMount, componentDidMount
+
+- Render method:
+    -> render() method is the only required method in a class component
+    -> When called, it should examine this.props and this.state and return one of the following types,
+        1) React elements / components:  <div /> , <MyComponent />
+        2) Arrays and fragments: 
+            -> Fragments let you group a list of children without adding extra nodes to the DOM.
+            -> Declaring 'fragments' :  
+            1) eg:
+            (
+                render() {
+                    return (
+                        <React.Fragment>
+                            <ChildA />
+                            <ChildB />
+                            <ChildC />
+                        </React.Fragment>
+                    );
+                }
+            )
+            2) eg: Short syntax
+            <>
+                <td>Hello</td>
+                <td>World</td>
+            </>
+        3) Portals:
+        4) String and numbers:
+        5) Booleans or null: 
+
+- 'Diffing' algorithm applied to a component’s children:

@@ -1,0 +1,15 @@
+- Conditional rendering:
+    -> Inline If with Logical && Operator: 
+        -> (condition && #statement)      eg: true && "hi"  //"hi"
+        -> It can be handy for conditionally including an element
+
+    -> Inline If-Else with Conditional Operator:  
+        -> ternary operator: (condition ? #statement1 : #statement2)      eg: true ? "hi" : "bye"   //"hi"
+
+
+- key attribute:
+    -> The key attribute is very important for react to indicate which of the children in a tree were changed and which stayed unchanged.
+    -> key attribute shouldn't be filled with index argument (or any inconsistent source), because it causes performance issues.
+    -> If we add an element in the beginning of an array it shifts the index for rest of the elements. So react will mutate all of these children.(ie, unshit method i think so)
+    
+

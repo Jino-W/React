@@ -1,0 +1,105 @@
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <div id = "root">
+
+        </div>
+        <script src="../js/react.development.js"></script>
+        <script src="../js/react-dom.development.js"></script>
+        <script src="../js/babel.js"></script>
+        <script src="../js/axios.js"></script>
+        <script type="text/babel">
+        
+            const rootHandle = document.getElementById('root')
+           
+            class UserList extends React.Component {
+                constructor() {
+                    super() 
+                    this.state = {
+                        users: [],
+                        selected:[]
+                    }
+                    console.log("constructor")
+                }
+
+                componentDidMount() {
+                    console.log("componentDidMount")
+                    axios.get("https://jsonplaceholder.typicode.com/users")
+                    .then((response) => {
+                        const users = response.data
+                        const newUser = users.map(user=>{
+                            user.isChecked = false
+                            return user
+                        })
+                        console.log("users",newUser)
+                        this.setState({ users: newUser })
+                    }) 
+                    .catch((err) => {
+                        alert(err)
+                    }) 
+                }
+
+                handleChange=(index,e)=>{
+                    this.setState(prevState=>{
+                        prevState.users[index].isChecked = !prevState.users[index].isChecked
+                        return {users : prevState.users}
+                    })
+                    this.setState(prevState=>{
+                        let selected;
+                        if(prevState.users[index].isChecked) {
+                            selected = prevState.selected.concat([prevState.users[index].name])
+                        }else{
+                            selected = prevState.selected.filter((s,i)=>{
+                                return i !== index
+                            })
+                        }
+                        return { selected}
+                    })
+                }
+
+
+                render() {
+                    console.log("render")
+                    console.log(this.state)
+                    console.log("us",this.state.users.length)
+                    return (
+                        <div>
+                            <h2>Listing Users</h2>
+                            <table cellpadding="18" border="2">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {this.state.users.map((user,index)=>{
+                                        return(
+                                            <tr key={index}>
+                                                <th>{index+1}</th>
+                                                <th>{user.name}</th>
+                                                <th><input type="checkbox" checked={user.isChecked}  onChange={()=>{this.handleChange(index)}} /></th>
+                                            </tr>
+                                        )
+                                    })}
+                                </tbody>
+                            </table>
+                            <h2>Selected Users</h2>
+                            <ul>
+                                {this.state.selected.map((userName,index)=>{
+                                    return <li key={index}>{userName}</li>
+                                })}
+                            </ul>
+                        </div>
+                    )
+                }
+            }
+
+            ReactDOM.render(<UserList/>, rootHandle)
+        </script>
+
+    </body>
+</html>

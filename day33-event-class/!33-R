@@ -1,0 +1,48 @@
+- NBSP (non-breaking space)  ->  &nbsp;
+
+- React:
+  -> undefined, null, object(error) can't be printed in browser UI
+  -> 
+
+
+- class:
+  -> setState, forms, lifeCycle methods only for class component.
+  -> inside class component: 
+    - events are handled,  
+    - how the state changes over time, 
+    - and how the data is prepared for display.
+
+
+
+
+
+- state: https://itnext.io/react-setstate-usage-and-gotchas-ac10b4e03d60
+    -> 2- ways of declaring states inside class
+//1)
+class Counter extends React.Component {
+  constructor(props, context) {
+    super(props, context)
+    this.state = {
+      quantity: 1,
+      counter: 0
+    }
+  }
+}
+
+2)
+class Counter extends React.Component {
+  state = {
+    quantity: 1,
+    counter: 0
+  }
+}
+    -> 2-ways(format) of delaring state:
+        -> this.setState({name:'jino'})    //completely replaces this.state
+        -> this.setState((prevState)=>{
+            return {name:'jino'}        //updates this.state  -> current state updation depends on previous state update
+           })
+    
+    -> setState():
+        -> zsetState() enqueues changes to the 'component-state' and tells React that this component and its children need to be re-rendered with the updated state.
+        -> React merges the object you provide into the current state.(prevstate = copy of state, whatever changes updated in the setState() can be merged with state)
+        -> The merging is shallow, so this.setState({comments}) leaves this.state.posts intact, but completely replaces this.state.comments.

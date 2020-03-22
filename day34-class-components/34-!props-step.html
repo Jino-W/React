@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+
+        class Number extends React.Component{
+            constructor(props){
+                super(props)
+                this.state = {
+                    n: 0
+                }
+            }
+
+            increment=()=>{
+                this.setState((prevState, props)=>{
+                    return {
+                        n: prevState.n + props.step
+                    }
+                })
+            }
+
+            reset=()=>{
+                this.setState((prevState)=>{
+                    return {
+                        n: 0
+                    }
+                })
+            }
+
+            render(){
+                return(
+                    <div>
+                        <h1>increment by 5</h1>
+                        <h2>{this.state.n}</h2>
+                        <button onClick={this.increment}>+5</button> &nbsp;
+                        <button onClick={this.reset}>reset</button>
+                    </div>
+                )
+            }
+        }
+
+        //virtual DOM
+        const ele = (
+            <Number n={10}/>
+        )
+        ReactDOM.render(ele , rootHandle)
+
+        
+    </script>
+    </body>
+</html>

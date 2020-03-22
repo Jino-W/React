@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script src = "../js/axios.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+
+        class ListingUsers extends React.Component{
+            constructor(){
+                super()
+                this.state ={
+                    users : [] //   //users: null or undefined -> Cannot read property 'length' of undefined or null also can't map on null or undefined
+                }
+            }
+
+            componentDidMount(){        //used as a place to send request to the server
+                // const xhr = new XMLHttpRequest()
+                // xhr.open("GET", "http://jsonplaceholder.typicode.com/users/")
+                // xhr.send()
+                // xhr.onload = () => {           //if u use function  //'this'->XMLHttpRequest
+                //     console.log(this, JSON.parse(xhr.responseText))    //so use arrow-function  //'this'->ListingUsers
+                //     const users = JSON.parse(xhr.responseText)
+                //     this.setState({users:users})
+                // }
+
+                //-------------------------------------
+
+                // console.log(fetch("http://jsonplaceholder.typicode.com/users/"))   //Promise__proto__: Promise[[PromiseStatus]]: "resolved"[[PromiseValue]]: Response
+                
+                // fetch("http://jsonplaceholder.typicode.com/users/")
+                // .then((response)=>{
+                //     return response.json()
+                // })
+                // .then((users)=>{
+                //     console.log(users)
+                //     this.setState({users:users})
+                // })
+
+                axios.get('http://jsonplaceholder.typicode.com/users/')
+                    .then((response)=>{
+                        const users=response.data
+                        this.setState({users})
+                    })
+                    .catch((err)=>{
+                        alert(err)
+                    })
+                
+            }
+
+
+
+            render(){
+                return(
+                    <div>
+                        <h2>Listing Users - {this.state.users.length}</h2>
+                        <ul>{
+                            this.state.users.map((user)=>{
+                                return <li key = {user.id} >{user.name}</li>
+                            })
+                        }</ul>
+                    </div>
+                )
+            }
+        }
+
+        const ele = <ListingUsers/>
+
+        ReactDOM.render(ele, rootHandle) 
+    </script>
+    </body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TO DO LIST</title>
+    </head>
+    <body>
+        <div id='root'>
+
+        </div>
+        <script src='../js//react.development.js'></script>
+        <script src='../js//react-dom.development.js'></script>
+        <script src='../js/babel.js'></script>
+        <script type='text/babel'>
+            const rootHandle=document.getElementById('root')
+            
+
+            class TODOLIST extends React.Component{
+                constructor(){
+                    super()
+                    this.state={
+                        count:0,   //id
+                        allTask: [],
+                        display : 'default',
+                    }
+                }
+
+                addTask=()=>{
+                    const promptText = prompt("Enter the text")
+                    if(promptText.length == 0){
+                        alert("empty statement")
+                    }
+                    else if(promptText.length !== 0){
+                        //date format
+                        const currentDate = new Date().toLocaleDateString();
+                        const currentTime = new Date().toLocaleTimeString();
+
+                        // const DateArr = []
+                        // DateArr.push(currentDate.getDate(), currentDate.getMonth(), currentDate.getFullYear())
+                        // const TimeArr = []
+                        // TimeArr.push(currentDate.getHours(), currentDate.getMinutes(), currentDate.getSeconds())
+
+                        this.setState((prevState)=>{
+                            prevState.count++
+                            prevState.allTask.push({Id: prevState.count, date: `${currentDate} , ${currentTime}` , task: promptText})
+                            return {allTask: prevState.allTask}
+                        })
+                    }
+                }
+
+                update=(index)=>{
+                    const promptText = prompt("Enter the text", this.state.allTask[index].task)              //prompt(text, defaultText)
+
+                    if(promptText.length == 0){
+                        alert("empty statement")
+                    }
+                    else if(promptText.length !== 0){
+                        //date format
+                        const currentDate = new Date().toLocaleDateString();
+                        const currentTime = new Date().toLocaleTimeString();
+
+                        // const DateArr = []
+                        // DateArr.push(currentDate.getDate(), currentDate.getMonth(), currentDate.getFullYear())
+                        // const TimeArr = []
+                        // TimeArr.push(currentDate.getHours(), currentDate.getMinutes(), currentDate.getSeconds())
+
+                        this.setState((prevState)=>{
+                            prevState.allTask[index].task = promptText
+                            //prevState.allTask[index].date = `${DateArr.join("-")} , ${TimeArr.join(":")}`
+                            prevState.allTask[index].date = `${currentDate} , ${currentTime}`
+
+                            return {allTask: prevState.allTask}
+                        })
+                    }
+
+                }
+
+                delete=(index)=>{
+                    this.setState((prevState)=>{                           
+                        const deletedId = prevState.allTask[index].Id
+                        prevState.allTask.splice(index,1)
+                        prevState.count--
+                        const arr = [].concat(prevState.allTask)
+                        arr.sort(function(a,b){return a.Id-b.Id}).map((obj, i)=>{
+                            if(obj.Id>deletedId){
+                                obj.Id-=1
+                            }
+                        })
+                        return {allTask: prevState.allTask}
+                    })
+                }
+
+                clearAll=()=>{
+                    this.setState((prevState)=>{
+                        prevState.allTask.splice(0)
+                        prevState.count=0
+                        return {allTask: prevState.allTask}
+                    })
+                }
+                 
+                 
+                sorting=(displaying)=>{
+                    this.setState((prevState)=>{
+                        prevState.display = displaying
+                        console.log(prevState.allTask.task)
+                        prevState.allTask.sort(function(a, b){
+                        
+                            if(prevState.display !== "default"){
+                                const nameA = a.task.toLowerCase()
+                                const nameB = b.task.toLowerCase()
+                                if (nameA < nameB){return prevState.display == "ascending" ? -1 : 1} 
+                                else if (nameA > nameB){return prevState.display == "ascending" ? 1 : -1}
+                                else{return 0}                            
+                            }
+
+                            else if(prevState.display == "default"){
+                                return a.Id-b.Id
+                            }
+                        })
+                        return {allTask : prevState.allTask}
+                    })
+                }
+
+                
+
+                positioning=(pos, index)=>{
+                    this.setState((prevState)=>{
+                        if(pos == 'up' && index != 0){
+                            const temp = prevState.allTask[index-1]
+                            prevState.allTask[index-1] = prevState.allTask[index]
+                            prevState.allTask[index] = temp
+                            return {allTask:prevState.allTask}
+                        }
+                        else if(pos == 'down' && index != prevState.allTask.length-1){
+                            const temp = prevState.allTask[index+1]
+                            prevState.allTask[index+1] = prevState.allTask[index]
+                            prevState.allTask[index] = temp
+                            return {allTask:prevState.allTask}
+                        }
+                    })
+                }
+                
+
+                render(){
+                    console.log('state',this.state)
+                    console.log('task',this.state.allTask)
+                    if(this.state.allTask.length == 0){
+                        return(
+                            <div>
+                                <h2>Add members to display</h2>
+                                <button onClick={this.addTask}>Add members</button>
+                            </div>
+                        )
+                    }
+                    else{
+                        return(
+                            <div>
+                                <h2>Add Members to display</h2>
+                                <table cellpadding = "12" border= "1">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th> 
+                                            <th>Date &amp; Time</th>
+                                            <th>Name&nbsp;
+                                                <button onClick={()=>{
+                                                    this.sorting('ascending')
+                                                }}>A</button> &nbsp;
+                                                <button onClick ={()=>{
+                                                    this.sorting('descending')
+                                                }}>D</button>  &nbsp;
+                                                <button onClick ={()=>{
+                                                    this.sorting('default')
+                                                }}>default</button> 
+                                            </th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {this.state.allTask.map((item, index)=>{
+                                            return(
+                                                <tr key={index}>
+                                                    <td>{item.Id}</td>
+                                                    <td>{item.date}</td>
+                                                    <td>{item.task} &nbsp;
+                                                        <button onClick={()=>{
+                                                            this.positioning('up',index)
+                                                        }}>up</button> &nbsp;
+                                                        <button onClick ={()=>{
+                                                            this.positioning('down',index)
+                                                        }}>down</button> 
+                                                    </td>
+                                                    <td>
+                                                        <a href="#" onClick={()=>{
+                                                            this.update(index)
+                                                        }}>Edit</a> <br/>
+                                                        <a href ="#" onClick ={()=>{
+                                                            this.delete(index)
+                                                        }}>Delete</a>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })}
+                                    </tbody>
+                                </table><br/><br/>
+                                <button onClick={this.addTask}>Add members</button> &nbsp;
+                                <button onClick={this.clearAll}>Clear All</button>
+                            </div>
+                        )
+                    }
+                }
+
+            }
+
+
+
+
+            const ele = <TODOLIST/>
+
+            ReactDOM.render(ele,rootHandle)
+        </script>
+    </body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+    const rootHandle = document.getElementById('root')
+
+    class WordCount extends React.Component{
+        constructor(props){
+            super(props)
+            this.state={
+                value: props.value,
+                word: props.word ,
+                char: props.char
+            }
+        }
+
+        increment=(e)=>{
+            const value = e.target.value
+            //console.log(e.target, e.target.value)
+            const words = e.target.value.split(/[\n\t ]/) //[\n\t ]->[newline,tab,space]
+            //console.log(words)
+            while(words.indexOf('') >= 0){
+                words.splice(words.indexOf(''), 1)
+            }
+            this.setState((prevState)=>{
+                return {
+                    value: value,
+                    word: words.length ,
+                    char: value.length
+                }
+            })  
+            console.log(this.state.value,this.state.word,this.state.char)
+            //console.log(localStorage)
+            
+            // localStorage.setItem("value",JSON.stringify(this.state.value))  // localStorage.setItem("value",JSON.stringify(value)) 
+            // localStorage.setItem("word",JSON.stringify(this.state.word))  // localStorage.setItem("word",JSON.stringify(word.length)) 
+            // localStorage.setItem("char",JSON.stringify(this.state.char))  // localStorage.setItem("word",JSON.stringify(char.length)) 
+            console.log("localStorage- event handle",localStorage)
+            console.log("State-event handle", this.state.value)
+        }
+
+
+        render(){
+            //css
+            const textarea = {
+                width: "600px",
+                height: "100px"
+            }
+            localStorage.setItem("value",JSON.stringify(this.state.value))  // localStorage.setItem("value",JSON.stringify(value)) 
+            localStorage.setItem("word",JSON.stringify(this.state.word))  // localStorage.setItem("word",JSON.stringify(word.length)) 
+            localStorage.setItem("char",JSON.stringify(this.state.char))  // localStorage.setItem("word",JSON.stringify(char.length)) 
+            console.log("localStorage - render",localStorage)
+            
+            //jsx
+            console.log("render",this.state.value)
+            return(
+                <div>
+                    <h2>Word Count</h2>
+                    <textarea style= {textarea} onChange = {this.increment} value={this.state.value}></textarea>
+                    <p>words: {this.state.word}, characters: {this.state.char}</p>
+                </div>
+            )
+        }
+    }
+
+    //console.log(localStorage)
+    if (!(localStorage.getItem('value')) && !(localStorage.getItem('word')) && !(localStorage.getItem('char'))){
+            localStorage.setItem('value',JSON.stringify(''))
+            localStorage.setItem('word',JSON.stringify(0))
+            localStorage.setItem('char',JSON.stringify(0))
+        }
+        // else{
+        //     localStorage.clear()
+        // }
+
+    ReactDOM.render(<WordCount value={JSON.parse(localStorage.getItem('value'))} word={JSON.parse(localStorage.getItem('word'))} char={JSON.parse(localStorage.getItem('char'))}/>, rootHandle)
+        
+    </script>
+    </body>
+</html>

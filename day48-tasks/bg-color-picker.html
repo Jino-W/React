@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+
+        class BgColor extends React.Component{
+            constructor(){
+                super()
+                this.state = {
+                    favColor: localStorage.getItem("favColor") ? localStorage.getItem("favColor") : ""
+                }
+            }
+
+            colorHandle=(e)=>{
+                const name = e.target.name
+                const value = e.target.value
+                localStorage.setItem(name,value)
+                this.setState({[e.target.name] : e.target.value})
+            }
+
+            render(){
+                console.log("p",this.state.favColor, "q",localStorage.getItem("favColor"))
+                return(
+                    <div style={{backgroundColor: this.state.favColor, width: '3000px', height: '3000px'}}>
+                        <input type="color" name= "favColor" value={this.state.favColor} onChange={this.colorHandle} />
+                    </div>
+                )
+            }
+        }
+
+        const ele = (
+            <div>
+                <BgColor />
+            </div>
+        )
+        ReactDOM.render( ele , rootHandle)
+
+        
+    </script>
+    </body>
+</html>

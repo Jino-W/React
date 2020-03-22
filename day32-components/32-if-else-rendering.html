@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+
+        const user = {
+            loggedIn : false      //true or false
+        }
+
+        const pageToShow =(
+            <div>
+                {user.loggedIn ? (         //ternary operator
+                    //true
+                    <ul>   
+                        <li><a href ="#">Account</a></li>
+                        <li><a href ="#">logOut</a></li>
+                    </ul>
+                ) : (
+                    //false
+                    <ul>
+                        <li><a href ="#">Register</a></li>
+                        <li><a href ="#">LogIn</a></li>
+                    </ul>
+                )}
+                
+            </div>
+        )
+
+        ReactDOM.render(pageToShow, rootHandle)
+
+        
+    </script>
+    </body>
+</html>

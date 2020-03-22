@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+
+        class Parent extends React.Component{
+            constructor(){
+                super()
+                this.state = {
+                        children: ['jino','minu']
+                        }
+            }
+
+            render(){
+                return(
+                    <div>{
+                        this.state.children.map(function(child, index){
+                            return <Listing name = {child} key={index}/>
+                        })
+                    }</div>
+                )
+            }
+        }
+
+        function Listing(props){
+            return <p>{props.name}</p>
+        }
+        
+        const ele = <Parent/>
+
+        ReactDOM.render(ele, rootHandle) 
+    </script>
+    </body>
+</html>

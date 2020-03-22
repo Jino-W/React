@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+
+        const employees = [
+            {id:1, name:'sam', department:'HR'},
+            {id:2, name:'jino', department:'Tech'},
+            {id:3, name:'Doe', department:'Tech'}
+        ]
+
+        const element =(
+            <div>
+            <h1>Employees - {employees.length}</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                    </tr>
+                </thead>          
+            <tbody>
+                {employees.map((e,index) =>{
+                    /*
+                    return <tr>{Object.keys(e).map((k)=>{
+                        return <td>{e[k]}</td>
+                    })}</tr>
+                    */
+                   return (
+                       <tr key = {index}>
+                            <td>{e.id}</td>
+                            <td>{e.name}</td>
+                            <td>{e.department}</td>
+                       </tr>
+                   )
+                })}
+            </tbody>
+            </table>
+            </div>
+        )
+        ReactDOM.render(element,rootHandle)
+
+        
+    </script>
+    </body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Catch All Numbers</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+    const rootHandle = document.getElementById('root')
+
+    class Number extends React.Component {
+        constructor() {
+            super()
+            this.state = {
+                randomNum: null,
+                num:[]
+            }
+        }
+
+        componentDidMount() {
+            this.timerID = setInterval(() => {
+                this.random()
+            },1000)
+        }
+
+        random() {
+            this.setState({ randomNum: Math.round(Math.random()*100) })
+            this.setState(prevState=>{
+                prevState.num.concat([prevState.randomNum])
+                this.setState({ num: prevState.num })
+            })
+        }
+
+        render() {
+            return (
+            <div>
+                <h1>{this.state.randomNum}</h1>
+                <ul>{
+                    this.state.num.map(n=>{
+                        if(n%2 === 0){
+                            return <li style={{color:"blue"}}>{n}</li>
+                        }else{
+                            return <li style={{color:"red"}}>{n}</li>
+                        }
+                    })
+                }</ul>
+
+            </div>
+            )
+        }
+    }
+
+    ReactDOM.render(<Number />,rootHandle)
+
+
+    </script>
+    </body>
+</html>

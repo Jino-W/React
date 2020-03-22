@@ -1,0 +1,25 @@
+- fs node.js
+    -> https://medium.com/@osiolabs/read-write-json-files-with-node-js-92d03cc82824
+    -> https://nodejs.org/api/fs.html
+
+- blocking, non-blocking: (sync, async)
+    -> https://nodejs.org/en/docs/guides/blocking-vs-non-blocking/ 
+    -> https://stackoverflow.com/questions/16336367/what-is-the-difference-between-synchronous-and-asynchronous-programming-in-node
+
+- node js training site:
+   -> https://heynode.com/
+
+- JSON:
+   -> https://developer.mozilla.org/en-US/docs/Glossary/JSON
+
+
+
+- flag:
+   -> In computer science, a flag is a value that acts as a signal for a function or process. 
+   -> The value of the flag is used to determine the next step of a program. 
+   -> Flags are often binary flags, which contain a boolean value (true or false). ... 
+   -> A common example of a flag in computer programming is a variable in a while loop.
+
+- Linter:
+   -> lint, or a linter, is a tool that analyzes source code to flag programming errors, bugs, stylistic errors, and suspicious constructs.
+   -> 

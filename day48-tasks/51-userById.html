@@ -1,0 +1,81 @@
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <div id = "root">
+
+        </div>
+        <script src="../js/react.development.js"></script>
+        <script src="../js/react-dom.development.js"></script>
+        <script src="../js/babel.js"></script>
+        <script src="../js/axios.js"></script>
+        <script type="text/babel">
+        
+            const rootHandle = document.getElementById('root')
+           
+            class UserList extends React.Component {
+                constructor() {
+                    super() 
+                    this.state = {
+                        users: [],
+                        id:'',
+                        user: ""
+                    }
+                    console.log("constructor")
+                }
+
+                componentDidMount() {
+                    console.log("componentDidMount")
+                    axios.get("https://jsonplaceholder.typicode.com/users")
+                    .then((response) => {
+                        const users = response.data
+                        console.log("users",users)
+                        this.setState({ users })
+                    }) 
+                    .catch((err) => {
+                        alert(err)
+                    }) 
+                }
+
+                handleChange=(e)=>{
+                    this.setState({[e.target.name]: e.target.value})
+                }
+
+                handleSubmit=(e)=>{
+                    this.setState(prevState=>{
+                        if(prevState.id <= 10 && prevState.id != 0){
+                            const user = prevState.users.find(user=>{
+                                return user.id == prevState.id
+                            })
+                            return {user: user}
+                        }else{
+                            alert('result not found')
+                            return {user: ""}
+                        }
+                        
+                    })
+                }
+
+
+                render() {
+                    console.log("render")
+                    console.log(this.state)
+                    console.log("us",this.state.users.length)
+                    return (
+                        <div>
+                            <h2>Get User Info</h2>
+                            <input type="text" name="id" value={this.state.id} placeholder="search by id" onChange={this.handleChange} />
+                            <button onClick={this.handleSubmit}>submit</button>
+                            <h2>User Details</h2>
+                            {this.state.user ? <p>{this.state.user.id}-{this.state.user.name}-{this.state.user.email}</p> : <p>- -</p>}
+                        </div>
+                    )
+                }
+            }
+
+            ReactDOM.render(<UserList/>, rootHandle)
+        </script>
+
+    </body>
+</html>

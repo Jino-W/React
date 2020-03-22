@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+    const rootHandle = document.getElementById('root')
+
+    class WordCount extends React.Component{
+        constructor(){
+            super()
+            this.state={
+                value: '',
+                word: 0 ,
+                char: 0
+            }
+        }
+
+        increment=(e)=>{
+            const value = e.target.value
+            //console.log(e.target, e.target.value)
+            const words = e.target.value.split(/[\n\t ]/) //[\n\t ]->[newline,tab,space]
+            //console.log(words)
+            while(words.indexOf('') >= 0){
+                words.splice(words.indexOf(''),1)
+            }
+            this.setState((prevState)=>{
+                return {
+                    value: value,
+                    word: words.length,
+                    char: value.length
+                }
+            })
+            localStorage.setItem("wordCount",JSON.stringify(this.state)) 
+            
+        }
+
+
+        render(){
+            //css
+            const textarea = {
+                width: "600px",
+                height: "100px"
+            }
+            
+            //jsx
+            return(
+                <div>
+                    <h2>Word Count</h2>
+                    <textarea style= {textarea} onChange = {this.increment} value={this.state.value}></textarea>
+                    <p>words: {this.state.word}, characters: {this.state.char}</p>
+                    <button></button>
+                </div>
+            )
+        }
+    }
+
+    ReactDOM.render(<WordCount />, rootHandle)
+        
+    </script>
+    </body>
+</html>

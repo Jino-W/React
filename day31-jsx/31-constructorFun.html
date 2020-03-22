@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Component</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+
+
+        function formatName(name){
+            return name.toUpperCase()
+        }
+
+        function Restaurant(props){              //“function components” 
+            return (
+            <div>
+                <h2>{formatName(props.name)}</h2>
+                <p>{props.cusinies.join(' - ')}</p>
+                <p>{props.rating}</p>
+            </div>
+            )
+        }
+
+        const hotels = [
+            {id:1, name: "mtr", cusinies:['south indian', 'north indian'], rating: 4.9},
+            {id:2, name: "kfc", cusinies:['american', 'italian'], rating: 5}
+        ]   
+
+        
+        const element = (
+            <div>
+                {hotels.map(function(hotel){
+                    return <Restaurant name={hotel.name} cusinies={hotel.cusinies} rating={hotel.rating} />
+                })}
+            </div>
+        )
+        
+
+        ReactDOM.render(element,rootHandle)
+
+        
+    </script>
+    </body>
+</html>

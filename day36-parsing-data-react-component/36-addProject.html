@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+
+        class AddProjects extends React.Component{
+            constructor(){
+                super()
+                this.state={
+                    taskCount : 0,
+                    file:{
+                        projectHead:'',
+                        project:[]
+                    }
+                }
+            }
+
+            addTask=()=>{
+                const id = (Math.random()*100000).toPrecision(5)
+                this.setState(prevState => {
+                    prevState.file.project.push({id:id,task:''})
+                    return { file: { projectHead : prevState.file.projectHead, project : prevState.file.project } }
+                })
+            }
+
+            writingProject = (e)=>{
+                const value = e.target.value
+                this.setState((prevState)=>{
+                    return {file: {projectHead: value, project: prevState.file.project}}
+                })
+            }
+
+            writingTask = (e, index)=>{
+                const value = e.target.value
+                this.setState((prevState)=>{
+                    prevState.file.project[index].task=value
+                    return {file: {projectHead: prevState.file.projectHead, project: prevState.file.project}}
+                })
+            }
+
+            removingTask=(e,id)=>{
+                this.setState((prevState)=>{
+                    const array = prevState.file.project.filter(task => task.id !== id)
+                    return {file: {projectHead: prevState.file.projectHead, project: array}}
+                })
+            }  
+
+            submitHandle=(e)=>{
+                e.preventDefault()
+            console.log(this.state.file)
+            }          
+
+            render(){
+                return(
+                    <div>
+                        <h2>Add Project</h2>
+                        <hr/>
+                        <br/>
+
+                        <label>Project: &nbsp;
+                            <input type="text" value={this.state.file.projectHead} onChange={this.writingProject} required/> <br/><br/>
+                        </label>
+
+                        {
+                            this.state.file.project.map((task, index)=>{
+                                return (
+                                    <div key={index}>
+                                    &nbsp; &nbsp; &nbsp; &nbsp; 
+                                    <label>Task: &nbsp;
+                                        <input type = "text" value = {this.state.file.project[index].task} onChange={(e)=>{ this.writingTask(e,index) }}/> &nbsp;&nbsp;
+                                        <button onClick={(e)=>{ this.removingTask(e,task.id) }}>remove</button>
+                                    </label><br/><br/>
+                                    </div>
+                                )
+                            })
+                        }
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button onClick={()=>{ this.addTask() }}>Add Task</button> &nbsp; &nbsp;
+                        <button onClick={this.submitHandle}>Submit</button>
+                    </div>
+                )
+            }
+        }
+
+        const ele = <AddProjects />
+
+        ReactDOM.render(ele, rootHandle) 
+    </script>
+    </body>
+</html>

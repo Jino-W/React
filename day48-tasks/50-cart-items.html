@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ToDoList</title>
+    </head>
+    
+    <body>
+        <div id ="root"></div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+    const rootHandle = document.getElementById('root')
+
+        class Cart extends React.Component{
+            constructor(){
+                super()
+                this.state={
+                    lists: [{name:"mobile",price:5000},{name:"shirt",price:800}],
+                    cart:[],
+                    isCart: false,
+                    todo: "",
+                    total:0,
+                    quantity: 1
+                }
+            }
+
+            cartHandle=(index,e)=>{
+                this.setState(prevState=>{
+                    prevState.cart.push({name: prevState.lists[index].name, price: prevState.lists[index].price, quantity: 1, total:prevState.lists[index].price})
+                    prevState.total = prevState.total + prevState.lists[index].price
+                    return {cart: prevState.cart, isCart: true, total: prevState.total}
+                })
+            }
+
+            addHandle=(index,e)=>{
+                this.setState(prevState=>{
+                    prevState.cart[index].quantity  = prevState.cart[index].quantity  +  1
+                    prevState.cart[index].total = prevState.cart[index].quantity * prevState.cart[index].price
+                    prevState.total = prevState.total + prevState.cart[index].price
+                    console.log(prevState.total)
+                    return {cart: prevState.cart, total: prevState.total}
+                })
+            }
+
+            subHandle=(index,e)=>{
+                this.setState(prevState=>{
+                    if(prevState.cart[index].quantity > 1){
+                        prevState.cart[index].quantity = prevState.cart[index].quantity - 1
+                        prevState.cart[index].total = prevState.cart[index].quantity * prevState.cart[index].price
+                        prevState.total = prevState.total - prevState.cart[index].price
+                        return {cart: prevState.cart, total:prevState.total}
+                    }else{
+                        prevState.total = prevState.total - prevState.cart[index].price
+                        prevState.cart.splice(index,1)
+                        if(prevState.cart.length === 0){
+                            prevState.isCart = false
+                            prevState.total = 0
+                        }
+                        return {cart: prevState.cart, isCart:prevState.isCart,total: prevState.total}
+                    }
+                })
+            }
+
+            render(){
+                console.log("lists:",this.state.lists)
+                return(
+                    <div>
+                        <h2>Listing Products {this.state.lists.length}</h2>
+                        <Table allList={this.state.lists} cartHandle={this.cartHandle}/><br/>
+                        <div>
+                            {this.state.cart.length === 0 ? <h2>No items in the cart</h2> : <h2>Cart Items {this.state.cart.length}</h2>}
+                            {this.state.isCart && <Table allList={this.state.cart} addHandle={this.addHandle} subHandle={this.subHandle} isCart= {true} />}
+                            {this.state.cart.length !== 0 && <h2>Total price = {this.state.total}</h2> }
+                        </div>
+                    </div>
+                )
+            }
+        }
+
+        function Table(props) {
+            return (
+                <table border="2" cellpadding="18">
+
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>{props.isCart ? "Quantity" : "Action"}</th>
+                            {props.isCart && <th>Total</th>}
+                        </tr>
+                    </thead>
+
+                    <tbody>{
+                        props.allList.map((list, index)=>{
+                            return (
+                                <tr key={index}>
+                                    <th>{index+1}</th>
+                                    <th>{list.name}</th>
+                                    <th>{list.price}</th>
+                                    {props.isCart ? 
+                                        (<th><button onClick={()=>{
+                                            props.addHandle(index)
+                                        }}>+</button>&nbsp;{list.quantity}&nbsp;
+                                        <button onClick={()=>{
+                                                props.subHandle(index)
+                                        }}>-</button></th>
+
+                                    ) : (
+
+                                    <th><button onClick={()=>{
+                                            props.cartHandle(index)
+                                    }}>Add</button></th>)}
+
+                                    {props.isCart && <th>{list.total}</th>}
+                                </tr>
+                            )
+                        })
+                    }</tbody>
+                </table>
+            )
+        }
+
+        ReactDOM.render(<Cart />, rootHandle)
+    </script>
+    </body>
+</html>

@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <title></title>
+        <link rel='stylesheet' href='style.css'/>
+        <link href="../twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Lato|Open+Sans|Roboto|Ubuntu&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div id = "root">
+
+        </div>
+        <script src="../js/react.development.js"></script>
+        <script src="../js/react-dom.development.js"></script>
+        <script src="../js/babel.js"></script>
+        <script src="../js/axios.js"></script>
+        <script type="text/babel">
+        
+            const rootHandle = document.getElementById('root')
+           
+            class UserList extends React.Component {
+                constructor() {
+                    super() 
+                }
+
+
+                render() {
+                    return (
+                        <div className="list-group card">
+                            <div>
+                                <h1 className="mb-1 card-header card text-center">Google-Fonts</h1>
+                            </div>
+                            <br/>
+                            <div className="card-body">
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <div className = "roboto d-flex w-100 justify-content-between">
+                                        <h3 className="mb-1">JavaScript - font: Roboto</h3>
+                                    </div>
+                                    <p className="roboto mb-1">JavaScript, often abbreviated as JS, is a high-level, interpreted scripting language that conforms to the ECMAScript specification. JavaScript has curly-bracket syntax, dynamic typing, prototype-based object-orientation, and first-class functions.</p>
+                                </a>
+                                <br/>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <div className = "lato d-flex w-100 justify-content-between">
+                                        <h3 className="mb-1">React - font: Lato</h3>
+                                    </div>
+                                    <p className="lato mb-1">React is a JavaScript library for building user interfaces. It is maintained by Facebook and a community of individual developers and companies. React can be used as a base in the development of single-page or mobile applications, as it is optimal for fetching rapidly changing data that needs to be recorded.</p>
+                                </a><br/>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <div className = "open-sans d-flex w-100 justify-content-between">
+                                        <h3 className="mb-1">Node - font: Open Sans</h3>
+                                    </div>
+                                    <p className="open-sans mb-1">Node.js is an open-source, cross-platform, JavaScript runtime environment that executes JavaScript code outside of a browser.</p>
+                                </a><br/>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <div className = "ubuntu d-flex w-100 justify-content-between">
+                                        <h3 className="mb-1">MongoDB - font: Ubuntu</h3>
+                                    </div>
+                                    <p className="ubuntu mb-1">MongoDB is a cross-platform document-oriented database program. Classified as a NoSQL database program, MongoDB uses JSON-like documents with schema. MongoDB is developed by MongoDB Inc. and licensed under the Server Side Public License.</p>
+                                </a>
+                            </div>
+                        </div>
+                    )
+                }
+            }
+
+            function App(){
+                return(
+                    <div className="container">
+                        <UserList />
+                    </div>
+                )
+            }
+            ReactDOM.render(<App/> ,rootHandle)
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Grid-Tables</title>
+        <link href="css/bootstrap.css" rel="stylesheet" />
+
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+
+        const employees = [
+            {id:1, name:'sam', department:'HR'},
+            {id:2, name:'jino', department:'Tech'},
+            {id:3, name:'Doe', department:'Tech'}
+        ]
+
+        function Employees(){
+            return(
+                <div>
+                    <h1>Employees - {employees.length}</h1>
+                    <table className="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Department</th>
+                            </tr>
+                        </thead>          
+                        <tbody>
+                            {employees.map((e,index) =>{
+                            return (
+                                <tr key = {index}>
+                                        <td>{e.id}</td>
+                                        <td>{e.name}</td>
+                                        <td>{e.department}</td>
+                                </tr>
+                            )
+                            })}
+                        </tbody>
+                    </table>
+                </div>
+            )
+        }
+
+        function App(){
+            return(
+                <div className="container">
+                    <Employees />
+                </div>
+            )
+        }
+        ReactDOM.render(<App/> ,rootHandle)
+
+        
+    </script>
+    </body>
+</html>

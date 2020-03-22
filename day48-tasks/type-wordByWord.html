@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Type word by word</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+    const rootHandle = document.getElementById('root')
+
+    class SingleChar extends React.Component {
+        constructor() {
+            super()
+            this.state = {
+                text:'Hello World...',
+                count: 0,
+                newText:'',
+                timerID: undefined
+            }
+        }
+
+        componentDidMount() {
+            this.state.timerID = setInterval(() => {
+                this.eachText()
+            },500)
+        }
+
+        eachText() {
+            console.log(this.state.count, this.state.newText)
+            this.setState(prevState=>{
+                return {count: prevState.count+=1, newText: prevState.text.slice(0,prevState.count)}
+            })
+        }
+
+        render() {
+            if(this.state.count == this.state.text.length+1){
+                clearInterval(this.state.timerID);
+            }
+            return (
+            <div>
+                <h2>{this.state.newText}</h2>
+            </div>
+            )
+        }
+    }
+
+    ReactDOM.render(<SingleChar />, rootHandle)
+
+    </script>
+    </body>
+</html>

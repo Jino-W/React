@@ -1,0 +1,159 @@
+<html>
+    <head>
+        <title></title>
+        <link href="css/bootstrap.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div id = "root"></div>
+        <script src="../js/react.development.js"></script>
+        <script src="../js/react-dom.development.js"></script>
+        <script src="../js/babel.js"></script>
+        <script src="../js/axios.js"></script>
+        <script type="text/babel">
+        
+            const rootHandle = document.getElementById('root')
+           
+            class UserList extends React.Component {
+                constructor() {
+                    super() 
+                    this.state = {
+                        users: [],
+                        todos: [],
+                        badges: [],
+                        lists: [],
+                        start:0,
+                        end: 20
+                    }
+                    console.log("constructor")
+                }
+
+                handleChange=(e,id)=>{
+                    let lists, badges;
+                    if(e.target.checked){
+                        lists = this.state.lists.concat(this.state.todos.filter(todo => todo.userId === id))
+                        badges = this.state.badges.concat(this.state.users.filter(user => user.id === id))
+                    }else{
+                        lists = this.state.lists.filter(list => list.userId !== id)
+                        badges = this.state.badges.filter(badge => badge.id !== id)
+                    }
+                    this.setState(prevState=>{
+                        return {
+                            lists,
+                            badges,
+                            start:0,
+                            end:20
+                        }
+                    })
+                }
+
+                incrementHandle=()=>{
+                    this.setState(prevState=>{
+                        const length = prevState.lists.length !== 0 ? prevState.lists.length : prevState.todos.length
+                        if(prevState.start >=0 && prevState.end < length){
+                            return {start: prevState.start + 20, end: prevState.end + 20}
+                        }
+                    })
+                }
+
+                decrementHandle=()=>{
+                    this.setState(prevState=>{
+                        const length = prevState.lists.length !== 0 ? prevState.lists.length : prevState.todos.length
+                        if(prevState.start >0 && prevState.end <= length){
+                            return {start: prevState.start - 20, end: prevState.end - 20}
+                        }
+                    })
+                }
+
+
+                componentDidMount() {
+                    Promise.all([axios.get('https://jsonplaceholder.typicode.com/users'),axios.get('https://jsonplaceholder.typicode.com/todos')])
+                        .then((values)=>{
+                            const users = values[0].data
+                            const todos = values[1].data
+                            this.setState({users,todos})
+                        })
+                        .catch((err)=>{
+                            alert(err)
+                        })
+                }
+
+                render() {
+                    console.log(this.state.start,this.state.end)
+                    return (
+                        <div>
+                            <div>
+                                <nav class="navbar navbar-dark bg-primary">
+                                    <h2 class="navbar-text text-centre text-white">TODO List</h2>
+                                    <span className = "form-inline my-2 mr-sm-2 text-white">
+                                            {this.state.lists.length === 0 ? <p>{this.state.start}-{this.state.end} of {this.state.todos.length}</p> : <p>{this.state.start}-{this.state.end} of {this.state.lists.length}</p>}
+                                    </span>
+                                </nav>
+                            </div>
+                            <div className = "row">
+                                <div className = "col-md-3 offset-md-1">
+                                    <h2>Listing users - {this.state.users.length}</h2>
+                                    <ul>
+                                        {this.state.users.map((user,index)=>{
+                                            return(
+                                                <div key={index} className="list-group-item custom-control custom-checkbox">
+                                                    <input type="checkbox" id={"customCheck"+index} onChange={(e)=>{this.handleChange(e,user.id)}} className="custom-control-input" />
+                                                    <label for={"customCheck"+index} className="custom-control-label">{user.name}</label>
+                                                </div>
+                                            )
+                                        })}
+                                    </ul>
+                                </div>
+
+                                <div className = "col-md-6 offset-md-1">
+                                    <h2>Todo Lists</h2>
+                                    {this.state.lists.length !== 0 ?
+                                        (<div>
+                                            <div className="row">
+                                                {this.state.badges.map((badge)=>{
+                                                    return <span  className="badge badge-pill badge-primary" key={badge.id}>{badge.name}</span>
+                                                })}
+                                            </div>
+
+                                            <div>
+                                                <ul>
+                                                    {this.state.lists.slice(this.state.start, this.state.end).map((list)=>{
+                                                        return <li key={list.id}>{list.title}</li>
+                                                    })}
+                                                </ul>
+                                            </div>
+                                        </div>):(<div>
+                                            <ul>
+                                                {this.state.todos.slice(this.state.start, this.state.end).map((todo,index)=>{
+                                                    return <li key={index}>{todo.title}</li>
+                                                })}
+                                            </ul>
+                                        </div>)
+                                    }
+
+                                    <nav aria-label="Page navigation example">
+                                        <ul className="pagination justify-content-end">
+                                            <li className="page-item" onClick={this.decrementHandle}><a className="page-link" href="#" aria-disabled={this.state.start <= 0}>Previous</a> </li>
+                                            <li className="page-item" onClick={this.incrementHandle}><a className="page-link" href="#" aria-disabled={this.state.lists.length>0 ? this.state.end>=this.state.lists.length : this.state.end>=this.state.todos.length}>Next</a></li>
+                                        </ul>
+                                    </nav>
+
+                                </div>
+                            </div>
+                        </div>
+                    )
+                }
+            }
+
+            function App(){
+                return(
+                    <div>
+                        <UserList />
+                    </div>
+                )
+            }
+
+            ReactDOM.render(<App />, rootHandle)
+        </script>
+
+    </body>
+</html>

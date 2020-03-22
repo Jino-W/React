@@ -1,0 +1,30 @@
+]<script>
+    const dctAxios = {
+        get: function(url){
+            return new Promise(function(resolve, reject){
+                const xhr = new XMLHttpRequest()
+                xhr.open("GET", url)
+                xhr.send()
+                xhr.onload =  function(){
+                    resolve(JSON.parse(xhr.responseText))
+                }
+                xhr.onerror =  function(){
+                    reject(xhr.responseText)
+                }
+            })
+        },
+        post: function(){
+            //...
+        }
+    }
+
+
+    dctAxios.get("http://jsonplaceholder.typicode.com/users")
+    .then(function(users){
+        console.log("success", users)
+    })
+    .catch(function(err){
+        console.log(err)
+    })
+
+</script>

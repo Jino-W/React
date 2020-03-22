@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Login Page</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+
+        class FormSubmit extends React.Component{
+            constructor(probs){
+                super()
+                this.state={
+                    name : '',
+                    password: '',
+                    hide : true,
+                    forms : []
+                }
+            }
+
+            userNameIs=(e)=>{
+                const name = e.target.value
+                this.setState({name})
+            }
+
+            passwordIs=(e)=>{
+                const password = e.target.value
+                this.setState({password})
+            }
+
+            defaultpreventing=(e)=>{
+                e.preventDefault()
+                this.setState((prevState)=>{
+                    prevState.forms.push({name : prevState.name, password: prevState.password})
+                    console.log(prevState.forms)
+                    return {name : '', password: '', forms: prevState.forms}
+                })
+            }
+
+            confirm=(e)=>{
+                const password = e.target.value
+                this.setState((prevState)=>{
+                    return {hide: !prevState.hide}
+                })
+            }
+
+            render(){
+                return(
+                    <div>
+                        <h2>Submit Form</h2>
+                        <form onSubmit={this.defaultpreventing}>
+                            <label>User Name: &nbsp;
+                                <input type="text" value={this.state.name} onChange={this.userNameIs} required/>
+                            </label><br/><br/>
+                            <label>Password: &nbsp;
+                                <input type= {this.state.hide ? "password" : "text"} value={this.state.password} onChange={this.passwordIs} required/>
+                            </label><br/><br/>
+                            <label>
+                                <input type="checkbox"  onChange={this.confirm}/> &nbsp; show password
+                            </label><br/><br/>
+                            <input type="submit" value="login"/>
+                        </form>
+                    </div>
+                )
+            }
+        }
+        
+        const ele = <FormSubmit/>
+        ReactDOM.render(ele, rootHandle) 
+    </script>
+    </body>
+</html>

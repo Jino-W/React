@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>All Capitals</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+    const rootHandle = document.getElementById('root')
+
+    class WordCount extends React.Component{
+        constructor(){
+            super()
+            this.state={
+                value: "",
+                word: 0 ,
+                char: 0
+            }
+        }
+
+        increment=(e)=>{
+            e.preventDefault()
+
+            //e.target -> event trigger => e.target stores the value , once the event completed(once the setState get called) it become 'null' -> new event => stores the current value
+
+            //http://dimafeldman.com/js/maintain-cursor-position-after-changing-an-input-value-programatically/
+            //https://medium.com/@brunogarciagonzalez/reactjs-events-exploration-a295505016f1
+
+            const cursorStart = e.target.selectionStart 
+            const cursorEnd = e.target.selectionEnd
+            
+            const value = e.target.value.toUpperCase()
+            const words = e.target.value.split(/[\n\t ]/) //[\n\t ]->[newline,tab,space]
+            while(words.indexOf('') >= 0){
+                words.splice(words.indexOf(''), 1)
+            }
+
+            const event = e.target     //e.persist()  -> it keep the e.target object for the previous event and create new object for the new event  (each object consumes memory)
+            this.setState(
+                {
+                    value: value,
+                    word: words.length,
+                    char: value.length
+                },()=>{
+                    event.setSelectionRange(cursorStart,cursorEnd)        //controlling cursor range of the previous event
+                }
+            )
+            
+            console.log(this.state.value,this.state.word,this.state.char)
+            console.log("State-event handle", this.state.value)
+        }
+
+
+        render(){
+            //css
+            const textarea = {
+                width: "600px",
+                height: "100px"
+            }
+            
+            //jsx
+            console.log("render",this.state.value)
+            return(
+                <div>
+                    <h2>Word Count</h2>
+                    <textarea style= {textarea}  onChange = {this.increment} value ={this.state.value}></textarea>
+                    <p>words: {this.state.word}, characters: {this.state.char}</p>
+                </div>
+            )
+        }
+    }
+    ReactDOM.render(<WordCount />, rootHandle)
+        
+    </script>
+    </body>
+</html>

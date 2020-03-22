@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+        class Form extends React.Component{
+            constructor(){
+                super()
+                this.state={
+                    email:'',
+                    password:''
+                }
+            }
+
+            emailHandle=(e) =>{
+                console.log(e.target)
+                const email = e.target.value
+                this.setState(()=>{
+                    return {email}
+                })
+            }
+            
+            passwordHandle=(e) =>{
+                console.log(e.target)
+                this.setState({password: e.target.value})
+            }
+            
+
+            submitHandle=(e) =>{
+                e.preventDefault()
+                console.log(
+                    {email:this.state.email,
+                    password:this.state.password})
+            }
+
+            render(){
+                return(
+                <div>
+                    <form onSubmit={this.submitHandle}>
+                        <label>
+                            <b>Email:&nbsp;</b>
+                            <input type='email' value={this.state.email} onChange={this.emailHandle}/>
+                        </label><br/><br/>
+                        <label>
+                            <b>Password:&nbsp;</b>
+                            <input type='password' value={this.state.password} onChange={this.passwordHandle}/>
+                        </label><br/><br/>
+                        <input type='submit'/>
+                    </form>
+                </div>
+                )
+            }
+        }
+
+        const ele=(
+            <div>
+                <Form/>
+            </div>
+        )
+
+        ReactDOM.render(ele,rootHandle)
+        
+    </script>
+    </body>
+</html>

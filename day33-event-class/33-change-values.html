@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+
+        //class component
+        class Counter extends React.Component{
+            //constructor
+            constructor(){
+                super()
+                this.state = {
+                    count : 0
+                }
+                console.log('inside constructor',this)
+                //set this key word inside event handler  done within constructor
+                this.handleUp = this.handleUp.bind(this)
+            }
+// console.log(this)
+            //methods inside the class (or) event handler
+            handleUp(){
+                //console.log(this)       //undefined
+                //this.state.count++        //updating state value directly -> render method doesn't get called
+                //instead of that use , this.setState() method  => value changes and render method called once again
+                this.setState((prevState)=>{           
+                    return {            
+                        count: prevState.count + 1
+                    }
+                })
+            }
+            //console.log(this)
+
+            //event handler - arrow function
+            /*
+            handleDown=()=>{
+                this.setState((prevState)=>{     //arrow fun   -> return keyword,{} ,() is optional      
+                   if(prevState.count>0){
+                        return {
+                            count: prevState.count - 1
+                        }
+                   }
+                })
+            }
+            */
+            handleDown=()=>{
+                this.setState(prevState =>  ({count: prevState.count - 1})  )           //es6 arrow function for 1 argument
+            }
+
+
+            //render() method
+            render(){
+                //console.log(this)           //current object
+                console.log('render', this.state)
+                console.log('inside render',this)
+                return(
+                    <div>
+                        <h1>This is class component</h1>
+                        <h2>{this.state.count}</h2>
+                        <h4> {undefined} {null} </h4> {/*undefined, null can't be printed in UI*/}
+                        <h3>{this.state}</h3>   {/*object can't be printed in UI and also produce error -> "Uncaught Invariant Violation:"*/}
+                        {/*   <button onClick={this.handleUp.bind(this)}> Up </button>   */}
+                        <button onClick={this.handleUp}>Up</button> &nbsp;
+                        <button onClick={this.handleDown}>Down</button>
+                    </div>
+                )
+            }
+        }
+
+        //virtual DOM
+        const ele = (
+            <div>
+            <Counter />
+            <Counter />
+            <Counter />
+            </div>
+        )
+        ReactDOM.render(ele , rootHandle)
+
+        
+    </script>
+    </body>
+</html>

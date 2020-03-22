@@ -1,0 +1,53 @@
+{/* http://www.javascriptkit.com/javatutors/arraysort2.shtml */}
+
+/*
+                sorting=(displaying)=>{
+                    this.setState((prevState)=>{
+
+                        prevState.display = displaying
+                        console.log(prevState.allTask.task)
+                        
+                        if(prevState.display == "ascending"){
+                            const sorted=prevState.allTask.sort(function(a, b){
+                                const nameA = a.task.toLowerCase()
+                                const nameB = b.task.toLowerCase()
+                                if (nameA < nameB){return -1} //sort string ascending
+                                else if (nameA > nameB){return 1}
+                                else{return 0}
+                        })
+                        console.log('ascending',prevState.allTask)
+                        return {allTask : sorted}
+                        }
+                        
+                        else if(prevState.display == "descending"){
+                            const sorted = prevState.allTask.sort(function(a, b){
+                                const nameA = a.task.toLowerCase()
+                                const nameB = b.task.toLowerCase()
+                                if (nameA < nameB){return 1} //sort string descending
+                                else if (nameA > nameB){return -1}
+                                else{return 0}
+                        })
+                        console.log('descending',prevState.allTask)
+                        return {allTask : sorted}
+                        }
+
+                        else if(prevState.display == "default"){
+                            console.log('default',prevState.allTask)
+                            prevState.allTask.sort(function(a, b){
+                                return a.Id-b.Id
+                            })
+	                        return {allTask : prevState.allTask}
+                        }
+                        
+                        
+                    })
+                }
+                */
+
+
+//date format
+                        const currentDate = new Date()
+                        const DateArr = []
+                        DateArr.push(currentDate.getDate(), currentDate.getMonth(), currentDate.getFullYear())
+                        const TimeArr = []
+                        TimeArr.push(currentDate.getHours(), currentDate.getMinutes(), currentDate.getSeconds())

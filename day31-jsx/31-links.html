@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+
+        const links = [
+            {id:1, name: "facebook", url: "http:facebook.com"},
+            {id:2, name: "google", url: "http:google.com"}
+        ]
+
+        const ele = (
+            <ul>{links.map((link)=>{
+                return (
+                    <li key={link.id}>
+                    <a href={link.url}>{link.name}</a>
+                    </li>
+                )
+            })
+            }</ul>
+        )
+
+        ReactDOM.render(ele,rootHandle)
+
+        
+    </script>
+    </body>
+</html>

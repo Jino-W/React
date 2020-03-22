@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>render elements</title>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.js"></script>
+    <script src="../js/axios.js"></script>
+    <script type="text/babel">
+
+const rootHandle = document.getElementById('root')
+class UserList extends React.Component{
+    constructor(){
+        super()
+        this.state={
+            posts:[],
+            limit:10
+        }
+        this.handleClick=this.handleClick.bind(this)
+    }
+
+    /* componentDidMount(){
+        const xhr=new XMLHttpRequest() 
+        xhr.open('GET','http://jsonplaceholder.typicode.com/posts/')
+        xhr.send()
+        xhr.onload=()=>{
+        const posts=JSON.parse(xhr.responseText)
+        this.setState({posts:posts})
+        } 
+    }*/
+    
+    componentDidMount(){
+        axios.get('http://jsonplaceholder.typicode.com/posts/')
+        .then((response)=>{
+            const posts=response.data
+            this.setState({posts})
+        })
+        .catch((err)=>{
+            alert(err)
+        })
+    }
+
+    handleClick(){
+        this.setState((prevState)=>{
+            return{
+                limit: prevState.limit + 10
+            }
+        })
+    }
+        
+    render(){
+        return(
+            <div>
+                <h2>Listing posts-({this.state.limit} of {this.state.posts.length})</h2>
+                    <ul>
+                    {this.state.posts.slice(0,this.state.limit).map((post)=>{
+                        return<li key={post.id}>{post.title}</li>
+                    })}
+                    </ul>
+                <button onClick={this.handleClick}>Show more</button>
+            </div>
+        )
+    }
+    }
+
+    /* render(){
+        return(
+            <div>
+                <p> name-{this.state.name}</p>
+                 <p> name-{this.state.email}</p>
+                <p>city-{this.state.user.address&&this.state.address.city}</p>
+        )
+    }*/
+    
+
+    ReactDOM.render(<UserList/>,rootHandle)
+    </script>
+    </body>
+    </html>

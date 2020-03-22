@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script src = "../js/axios.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+
+        class ListingUsers extends React.Component{
+            constructor(){
+                console.log("constructor")
+                super()
+                this.state ={
+                    //userAddress : {},
+                    user : {} //   //users: null or undefined ->Cannot read property 'length' of undefined or null also can't map on null or undefined
+                }
+            }
+
+            componentDidMount(){ 
+                console.log("componentDidMount")
+
+                axios.get("http://jsonplaceholder.typicode.com/users/1")
+                .then((response)=>{
+                    const user = response.data
+                    console.log(user)
+                    this.setState({user: user})   //{user: user, userAddress :user.address}
+                })
+                .catch((err)=>{
+                    console.log(err)
+                })
+            }
+
+
+
+            render(){
+                console.log("render")
+                return(
+                    //1)  {/* <p>{this.state.userAddress.city}</p> */}
+
+                    //2)
+                    // <div>
+                    // {
+                    //     Object.keys(this.state.user).map((propss)=>{
+                        //     //console.log(Object.keys(this.state.user))
+                        //     console.log(propss)
+                            //     if(propss == "name"){
+                            //         return <p>{this.state.user[propss]}</p>
+                            //     }else if(propss == "email"){
+                            //         return <p>{this.state.user[propss]}</p>
+                            //     }
+                            //     else if(propss == "address"){
+                            //         return <p>{this.state.user[propss].city}</p>
+                            //     }
+                    //     })
+                    // }   
+                    // </div>
+
+                    //3)
+                    <div>
+                        {/* first rendering */} 
+                        <p>{this.state.user.name}</p>     {/* //undefined  -> can be reassigned*/}   
+                        <p>{this.state.user.email}</p>      {/* //undefined */}
+                        {/* <p>{this.state.user.address}</p> */}    {/* //undefined */}
+                        {/* <p>{this.state.user.address.city}</p> */}    {/* //undefined.city => Error -> can't be reassigned*/}
+                        <p>{this.state.user.address && this.state.user.address.city}</p> {/* (or) {this.state.user.address && <p>{this.state.user.address.city}</p>} */}
+                    </div>
+                )
+            }
+        }
+
+        const ele = <ListingUsers/>
+
+        ReactDOM.render(ele, rootHandle) 
+    </script>
+    </body>
+</html>

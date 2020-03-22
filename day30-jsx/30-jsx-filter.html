@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+        const items = [
+            {id:1, name: 'chilly chicken', isVeg:false, price:150},
+            {id:2, name: 'gobi65', isVeg:true, price:100},
+            {id:3, name: 'panner', isVeg:true, price:125},
+            {id:4, name: 'chicken chops', isVeg:false, price:200}
+        ]
+        const veg = items.filter((item)=>{
+            return item.isVeg
+        })
+
+        const element = (
+            <div>
+            <h2>Listing Veg-items: {veg.length}</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {veg.map((e)=>{
+                        return (
+                        <tr>
+                            <td>{e.name}</td>
+                            <td>{e.price}</td>
+                        </tr>
+                        )
+                    })}
+                </tbody>
+            </table>
+            </div>
+        )
+        ReactDOM.render(element,rootHandle)
+
+        
+    </script>
+    </body>
+</html>

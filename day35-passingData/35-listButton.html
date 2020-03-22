@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2-List</title>
+    </head>
+    <body>
+        <div id ="root">
+        </div>
+    
+    <script src = "../js/react.development.js"></script>
+    <script src = "../js/react-dom.development.js"></script>
+    <script src = "../js/babel.js"></script>
+    <script type = "text/babel">
+    
+        const rootHandle = document.getElementById('root')
+
+        class StudentList extends React.Component{
+            constructor(){
+                super()
+                this.state ={
+                    students : [
+                        {id:1, name: 'jino', class:10},
+                        {id:2, name: 'minu', class:8},
+                        {id:3, name: 'sam', class:12}
+                    ]
+                }
+            }
+
+          
+            alerting=(student)=>{
+                window.alert(`${student.id}-${student.name}-${student.class}`)
+            }
+
+
+            remove=(studentId)=>{
+                this.setState((prevState)=>{
+                    //prevState.students.splice(prevState.students.indexOf(student), 1) -> impure  ( change the original state )
+                    return {students : prevState.students.filter(student => student.id !== studentId)} -> 
+                })
+            }
+
+
+            render(){
+                return (
+                    <div>
+                        <h2>Listing students - {this.state.students.length}</h2>
+                        <ul>{
+                            this.state.students.map((student,index)=>{
+                                return (
+                                    <div key={index}>
+                                    <li>{student.name} &nbsp;
+                                        <button onClick={()=>{
+                                            this.alerting(student)
+                                        }}>show details</button> &nbsp;
+
+                                        <button onClick={()=>{
+                                            const confirmTask = window.confirm('Are u sure?')
+                                            if(confirmTask){
+                                                this.remove(student.id)
+                                            }
+                                        }}>delete details</button> 
+                                    </li><br/>
+                                    </div>
+                                )
+                            })
+                        }
+                        </ul>
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(<StudentList/> , rootHandle)
+
+        
+    </script>
+    </body>
+</html>
